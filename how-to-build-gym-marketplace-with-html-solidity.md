@@ -19,8 +19,10 @@ slug: /tutorials/build a gym marketplace with html and solidity
   - [Prerequisites](#prerequisites)
   - [Requirements](#requirements)
   - [Let's Begin](#lets-begin)
-  - [Smart Contract Development](#smart-contract-development)
-  - [Contract Deployment](#contract-deployment)
+  - [Gymnaseum Smart Contract Development](#gymnaseum-smart-contract-development)
+  - [Gymnaseum Smart Contract Deployment](#gymnaseum-smart-contract-deployment)
+  - [GymnaseumService Smart Contract Development](#gymnaseumservice-smart-contract-development)
+  - [GymnaseumService Smart Contract Deployment](#gymnaseumservice-smart-contract-deployment)
   - [Frontend Development](#frontend-development)
   - [The Main.js File](#the-mainjs-file)
   - [Conclusion](#conclusion)
@@ -54,7 +56,7 @@ Below are screenshots of what our dapp would look like:
 
 *This tutorial is targeted at total beginners with basic prior knowledge of HTML and CSS.*
 
-## Smart Contract Development
+## Gymnaseum Smart Contract Development
 
 We will start by building our `Gymnaseum.sol` contract by using Remix. Remix is a web-based IDE that allows developers to write, test and deploy smart contracts on the Celo blockchain. 
 
@@ -76,7 +78,7 @@ This license governs how the code can be used, and it is important to ensure tha
 To ensure the smart contract can run without any issues and is protected by a license, it's important to indicate the version of the compiler and the license it uses. This can be done by specifying the compiler version with the `pragma` keyword, and the license used, by including a statement that specifies the license at the beginning of the contract code.
 
 
-Next, we import the Service Contract which we will also be used in this project `import './GymnaseumService.sol';` the service contract has the hire function to hire a gym trainer and pay with the celo stablecoin (cUSD). 
+Next, we import the Service Contract which we will also be using in this project `import './GymnaseumService.sol';` the service contract has the hire function to hire a gym trainer and pay with the celo stablecoin (cUSD). 
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -85,7 +87,7 @@ pragma solidity >=0.7.0 <0.9.0;
 import './GymnaseumService.sol';
 ```
 
-Next up, we define an IERC20Token interface which enables us to interact with the celo stablecoin (cUSD).
+Next up, we define an `IERC20Token` interface which enables us to interact with the Celo stablecoin (cUSD).
 
 
 ```solidity
@@ -108,7 +110,7 @@ These tokens have pre-defined functions and events that can be easily used in co
 
 You can find more information on how to use these functions and events in the Celo **[documentation](https://docs.celo.org/developer-guide/celo-for-eth-devs)**. The documentation also provides more details on how to interact with ERC-20 tokens and how to use them with the Celo network.
 
-Following this, You define your smart contract by giving it a name. In our case our contract name is `Gymnaseum`. You can name it anything you want but ensure you keep it descriptive.
+Following this, You define your smart contract by giving it a name. In our case, our contract name is `Gymnaseum`. You can name it anything you want but ensure you keep it descriptive.
 
 ```solidity
 Contract Gymnaseum {
@@ -124,52 +126,52 @@ Contract Gymnaseum {
     uint sold;
   }
 }
-  ...
+
 ```
 After defining the single variables used in the contract, you want to give the product its properties and group variables together.
 
 To do this, you would require a struct data type with the keyword `struct` and give it multiple properties. ([Learn about structs here](https://docs.soliditylang.org/en/latest/types.html#structs))
 
 For this tutorial, these would be the variables that you would store in the struct:
-1. owner - This would store the address of the owner of a particular Product as all products in the marketplace has an owner. This has the address data type.
-2. name - This stores the name of the product. This has a String data type.
-3. image - This stores the image of the product gotten from a URL and it has a string data type.
-4. description - This stores the project description and also has a string data type.
-5. location - This stores the location of the product and also has a string data type.
-6. serviceFee - This stores the gas fee to buy a product. Its a number so it has a type of uint.
-6. price - This stores the amount of the product. Its also a number so it has a type of uint.
-7. sold - This keeps track of when a product is sold or not and it has a type of Boolean.
+1. `owner` - This would store the address of the owner of a particular Product as all products in the marketplace have an owner. This has the address data type.
+2. `name` - This stores the name of the product. This has a String data type.
+3. `image` - This stores the image of the product gotten from a URL and it has a string data type.
+4. `description` - This stores the project description and also has a string data type.
+5. `location` - This stores the location of the product and also has a string data type.
+6. `serviceFee` - This stores the gas fee to buy a product. It's a number so it has a type of uint.
+6. `price` - This stores the amount of the product. It's also a number so it has a type of uint.
+7. `sold` - This keeps track of when a product is sold or not and it has a type of Boolean.
 
 
-In the next line, you define a state variable productsLength, this is going to keep track of the products in our contract. It is of a `uint` type which means it can only store integer values. [(Learn more about data types in solidity)](https://docs.soliditylang.org/en/latest/types.html)
+In the next line, you define a state variable `productsLength`, this is going to keep track of the products in our contract. It is of a `uint` type which means it can only store unsigned integer values. [(Learn more about data types in solidity)](https://docs.soliditylang.org/en/latest/types.html)
 
 ```solidity
 uint internal productsLength = 0;
 ```
-We also define the visibility of our variable to `internal` which means it cannot be accessed from external smart contracts or addresses and can only be modified within the smart contract. ([Learn more about visiblity](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)). Also, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, you need to know the address of the token. So we define this also with the code below:
+We also define the visibility of our variable as `internal` which means it cannot be accessed from external smart contracts or addresses and can only be modified within the smart contract. ([Learn more about visiblity](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)). Also, for us to interact with the cUSD ERC-20 token on the Celo Alfajores test network, you need to know the address of the token. So we define this also with the code below:
 
 ```solidity
   address payable internal onwerAddress;
   ServiceInterface internal ServiceContract;  
 ```
 In the code above we also interfaced the Service Contract.
-The purpose of an interface is to enforce a defined set of properties and to execute specific functions in another object.([Learn more about Interfaces in Solidity Smart Contracts](https://cryptomarketpool.com/interface-in-solidity-smart-contracts/)).
+The purpose of an interface is to enforce a defined set of properties and to execute specific functions in another object. ([Learn more about Interfaces in Solidity Smart Contracts](https://cryptomarketpool.com/interface-in-solidity-smart-contracts/)).
 
-Next in our smartcontract is a mapping function to handle multiple products, a mapping is needed where you can access the value of a product through their key. 
-To create a mapping, you use the keyword `mapping` and assign a key type to a value type. In this case, your key would be an integer and the value would be the struct Product we just created.
+Next in our smart contract is a mapping to handle multiple products, a mapping is needed where you can access the value of a product through its key. 
+To create a mapping, you use the keyword `mapping` and assign a key type to a value type. In this case, your key would be an unsigned integer and the value would be the struct `Product` we just created.
 
 ```solidity
   mapping (uint => Product) internal products;
 ```
 
-As stated earlier, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, you need to know the address of the token. Which we are declaring in the code below:
+As stated earlier, for us to interact with the cUSD token on the Celo Alfajores test network, you need to know the address of the token which we declare in the code below:
 
 ```solidity
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 ```
 
-We also define a constructor in the code below. The msg.sender function returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
-The ServiceContract function is assigned to the ServiceInterface.
+We also define a constructor in the code below. The `msg.sender` function returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
+The `ServiceContract` variable is assigned to the `ServiceInterface`.
 
 ```solidity
 constructor(address serviceContractAddress) {
@@ -239,15 +241,16 @@ In the next section, you will define a function to add the products to the smart
   }
 ```
 
-You have to specify the parameters type in the function. In this case, we need to pass the name, description, image, location, price and serviceFee (all with an underscore to differentiate them from the struct values) as parameters to the function. 
+You have to specify the type of parameters in the function. In this case, we need to pass the `name`, `description`, `image`, `location`, `price`, and `serviceFee` (all with an underscore to differentiate them from the struct values) as parameters to the function. 
 
-Next, associate the key productsLength with a new Product structure in the products mapping.
+Next, associate the key `productsLength` with a new `Product` in the `products` mapping.
 
-The msg.sender function as discussed earlier returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
+The `msg.sender` function as discussed earlier returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
 You also need to assign values to the other variables using the provided parameters.
 
 
-Next, we would create a function that would add the service to the ServiceContract.
+Next, we would create a function that would add the service to the `ServiceContract`:
+
 ```solidity
     function addService(
     string memory _name,
@@ -261,7 +264,7 @@ Next, we would create a function that would add the service to the ServiceContra
   }
 ```
 
-Next, we would create a function that would read the products created in the 'writeProduct' function.
+Next, we would create a function that would read the products created in the `writeProduct` function.
 
 ```solidity
    function readProduct(uint _index) public view returns (
@@ -288,14 +291,14 @@ Next, we would create a function that would read the products created in the 'wr
   }
 ```
 
-This function will carry a parameter of _index. You also need to specify the variables you will return with the function. 
+This function will carry a parameter of `_index`. You also need to specify the variables you will return with the function. 
 
 In this case, it would be a tuple corresponding to the variables declared in the struct. 
 
-The function needs to return the address of the owner, the strings and the uint values of `serviceFee`, `price`, and `sold`.
+The function needs to return the address of the owner, the strings and the `uint` values of `serviceFee`, `price`, and `sold`.
 
 
-Proceeding, we would create a function that gets the Service added to the Service contract. 
+Next, we would create a function that gets the Service added to the Service contract. 
 
 ```solidity
    function getService(uint _index) public view returns(
@@ -312,14 +315,14 @@ Proceeding, we would create a function that gets the Service added to the Servic
   }
 ```
 
-The "getService" function, which is public, takes in an index of type uint as a parameter.
+The `getService` function, which is `public`, takes in an index of type `uint` as a parameter.
 
 
 The first parameter is the address of the user, the following parameters are the strings and the uint values of `rate`, and `hiresLength`.
 
 The `hiresLength`parameter tracks when a service is hired already.
 
-Next we will call a function to get Service Hire in the block of code below:
+Next, we will call a function to get Service Hire in the block of code below:
 ```solidity
    function hireService(
    uint _index,
@@ -340,17 +343,17 @@ Next we will call a function to get Service Hire in the block of code below:
 ```
 
 
-The `hireService` function is a public function because we need it to be accessed outside the contract. The function accepts three arguments: `_index`, `_price`, and `_serviceUser`, which are of type `uint` and `address`.
+The `hireService` function is public because we need it to be accessed outside the contract. The function accepts three arguments: `_index`, `_price`, and `_serviceUser`, which are of type `uint` and `address`.
 
-The function first checks a condition using the `require` statement, which verifies if a transfer of `_price` amount of `cUsdTokenAddress` token has occurred from the `msg.sender` (i.e., the account that called the function) to the `_serviceUser` address. If the transfer is successful, the `hireService` function of a `ServiceContract` instance is then called, passing the `_index` argument.
+The function first checks a condition using the `require` statement, which verifies if a transfer of the `_price` amount of the `cUsdTokenAddress` token has occurred from the `msg.sender` (i.e., the account that called the function) to the `_serviceUser` address. If the transfer is successful, the `hireService` function of a `ServiceContract` instance is then called, passing the `_index` argument.
 
 The `transferFrom` method used in the `require` statement is a function provided by an ERC20-compatible token contract that allows the transfer of tokens from one address to another. The `payable` keyword used to cast the `_serviceUser` address indicates that the recipient can receive ether along with the token transfer, i.e., `_serviceUser` is a payable address.
 
 The code also includes an error message that will be displayed if the `require` condition fails, i.e., if the transfer of tokens is not successful.
-The function will use the require function to make sure that the sender of this transaction is not able to request for the service and will throw an error if this is done. 
+The function will use the require function to make sure that the sender of this transaction is not able to request the service and will throw an error if this is done. 
 
 
-The next function, the `buyProduct` function which handles the buying of the product is a Public function and also a payble function which contains most of the parameters already discussed.
+The next function, the `buyProduct` function which handles the buying of the product is a Public function and also a payable function that contains most of the parameters already discussed:
 
 ```solidity
    function buyProduct(uint _index) public payable  {
@@ -376,7 +379,7 @@ The next function, the `buyProduct` function which handles the buying of the pro
 
 Next in our contract, we will create two public functions that will iterate over the products and services and return the total number of products and services.
 
-```jssolidity
+```solidity
    function getProductsLength() public view returns (uint) {
     return (productsLength);
   }
@@ -552,35 +555,36 @@ contract Gymnaseum {
 }
 ```
 
-## Contract Deployment
+## Gymnaseum Smart Contract Deployment
 
-To deploy the contract, we would need:
+To deploy the contract, we will need:
 1. [CeloExtensionWallet]((https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh?hl=en))
 2. [Celo Faucet](https://celo.org/developers/faucet) 
 3. Celo Remix Plugin
 
-Download the Celo Extension Wallet from the Google chrome store using the link above. After doing that, create a wallet, store your key phrase in a very safe place to avoid permanently losing your funds.
+Download the Celo Extension Wallet from the Google Chrome store using the link above. After doing that, create a wallet, and store your key phrase in a very safe place to avoid permanently losing your funds.
 
-After downloading and creating your wallet, you will need to fund it with test tokens using the Celo Faucet. Copy the address to your wallet, click the link to the faucet above and the paste the address into the text field and confirm.
+After downloading and creating your wallet, you will need to fund it with test tokens using the Celo Faucet. Copy the address to your wallet, click the link to the faucet above, paste the address into the text field, and confirm.
 
-Next up, on remix, download and activate the celo plugin from the plugin manager. 
+Next up, on Remix, download and activate the celo plugin from the plugin manager. 
 
 Lastly, connect your wallet and deploy your contract.
 
+## GymnaseumService Smart Contract Development
 
-We will then go ahead to build the Service Contract ("GymnaseumService")on Remix also.
+We will now go ahead and build the Service Contract ("GymnaseumService")on Remix also.
 
 Create a file also on Remix, which you can name 'GymnaseumService.sol'.
 
-Starting out in the first line as discussed already, you include a statement that specifies the license under which the code is being released.
+Starting in the first line as discussed already, you include a statement that specifies the license under which the code is being released.
 
-```js
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 ```
-Next we are going to have some couple of functions within the Service Interface.
+Next, we are going to create a couple of functions within the Service Interface.
 
-```js
+```solidity
 interface ServiceInterface {
   function readServicesLength() external view returns (uint);
   function readService(uint _index) external view returns (address user, string memory name, string memory image, string memory description, string memory location, string memory contact, uint rate, uint hiresLength);
@@ -592,11 +596,11 @@ interface ServiceInterface {
 
 In the code above, the `readServicesLength` function returns the number of Services which is of the data type uint.
 
-The next function `readService` returns some parameters whoch includes the address of the service provider along with some string data type parameters (name, image, description, location and contact) and lastly we have two uint data type parameters (rate and hiresLength).
+The next function `readService` returns some parameters which include the address of the service provider along with some string data type parameters (name, image, description, location, and contact) lastly we have two uint data type parameters (rate and hiresLength).
 
-The `readServiceHire` function returns the hirer address along with the timestamp a service was hired. We also have the `writeService`function that stores the service paramaters to the blockchain and lastly we have the `hireService` function.
+The `readServiceHire` function returns the hirer address along with the timestamp a service was hired. We also have the `writeService`function that stores the service parameters to the blockchain and lastly, we have the `hireService` function.
 
-```js
+```solidity
 interface IERC20Token {
   function transfer(address, uint256) external returns (bool);
   function approve(address, uint256) external returns (bool);
@@ -610,9 +614,9 @@ interface IERC20Token {
 }
 ```
 
-Next in the Service Contract as stated above we have an interface which specifies six functions and two events:
+Next in the Service Contract as stated above we have an interface that specifies six functions and two events:
 
-1. `transfer`: This function transfers tokens from the caller's address to a specified recipient's address. It takes two arguments: the recipient's address and the amount of tokens to transfer. It returns a boolean value indicating whether the transfer was successful.
+1. `transfer`: This function transfers tokens from the caller's address to a specified recipient's address. It takes two arguments: the recipient's address and the number of tokens to transfer. It returns a boolean value indicating whether the transfer was successful.
 
 2. `approve`: This function allows a designated spender address to withdraw tokens from the caller's address. It takes two arguments: the spender's address and the amount of tokens to approve. It returns a boolean value indicating whether the approval was successful.
 
@@ -629,7 +633,7 @@ The two events specified in the interface are:
 1. Transfer Event: This event is emitted when tokens are transferred from one address to another. It includes the sender's address, the recipient's address, and the amount of tokens transferred.
 2. Approval Event: This event is emitted when a spender is approved to withdraw tokens from an owner's address. It includes the owner's address, the spender's address, and the amount of tokens approved.
 
-```js
+```solidity
 contract GymnaseumService {
 
   struct Hire {
@@ -653,22 +657,22 @@ contract GymnaseumService {
 
 In the code above we have our contract which is called GymnaseumService, in the contract we defined two struct types: Hire and Service.
 
-The Hire struct has two properties: hirer, which is an Ethereum address, and timestamp, which is a Unix timestamp indicating when the hiring occurred. This struct is used to keep track of users who have hired services from the GymnaseumService contract.
+The Hire struct has two properties: `hirer`, which is an Ethereum address, and `timestamp`, which is a Unix timestamp indicating when the hiring occurred. This struct is used to keep track of users who have hired services from the GymnaseumService contract.
 
 The Service struct has several properties, including:
 
-address: which stores a users address (an Ethereum address that is payable).
-name: this has a string data type and it takes the name of the service.
-image: this has a string data type and it takes the image associated with the service.
-description: this has a string data type and it takes the description of the service.
-location: this has a string data type and it takes the location of the service.
-contact: this has a string data type and it takes the contact information for the service.
-rate: an unsigned integer that represents the hourly rate for the service.
-hiresLength: an unsigned integer that represents the number of times the service has been hired.
+- `address`: which stores a user's address (an Ethereum address that is payable).
+- `name`: this has a string data type and it takes the name of the service.
+- `image`: this has a string data type and it takes the image associated with the service.
+- `description`: this has a string data type and it takes the description of the service.
+- `location`: this has a string data type and it takes the location of the service.
+- `contact`: this has a string data type and it takes the contact information for the service.
+- `rate`: an unsigned integer that represents the hourly rate for the service.
+- `hiresLength`: an unsigned integer that represents the number of times the service has been hired.
 
-Lastly we have a mapping of unsigned integers to Hire struct, which will be used to keep track of who has hired the service and when.
+Lastly, we have a mapping of unsigned integers to the `Hire` struct, which will be used to keep track of who has hired the service and when.
 
-```js
+```solidity
 uint internal servicesLength = 0;
   mapping (uint => Service) internal services;
 
@@ -691,7 +695,7 @@ uint internal servicesLength = 0;
 ```
 In the code above we have two events and some storage variables.
 
-The first storage variable is an unsigned integer servicesLength which is initialized to zero. This variable is used to keep track of the number of services that have been added to the services mapping.
+The first storage variable is an unsigned integer `servicesLength` which is initialized to zero. This variable is used to keep track of the number of services that have been added to the services mapping.
 
 The services mapping is defined to map unsigned integers to Service structs. The Service struct has various properties that describe a particular service that can be hired, such as its name, image, description, location, contact information, and hourly rate.
 
@@ -701,7 +705,7 @@ The hireServiceEvent event is defined with several parameters, including the add
 
 In general, the services mapping is used to keep track of all the services that have been added to the system, and the events are used to log when services are added or hired.
 
-```js
+```solidity
 function writeService(
     string memory _name,
     string memory _image,
@@ -739,17 +743,17 @@ function writeService(
 
 In the code above we have the `writeService` function which takes several input parameters, including a name, image, description, location, contact information, and hourly rate for the service. All the input parameters are of type string except for the hourly rate which is of type uint.
 
-Within the function, a new unsigned integer variable _hiresLength is initialized to zero. This variable is used to set the initial value for the hiresLength property of the newly created service.
+Within the function, a new unsigned integer variable `_hiresLength` is initialized to zero. This variable is used to set the initial value for the hiresLength property of the newly created service.
 
-A new Service struct is created and stored in the services mapping. The properties of the new Service struct are set using the input parameters and the _hiresLength variable. The user property of the Service struct is set to the payable address of the caller (tx.origin).
+A new `Service` struct is created and stored in the services mapping. The properties of the new `Service` struct are set using the input parameters and the `_hiresLength` variable. The user property of the Service struct is set to the payable address of the caller (tx.origin).
 
-After the new Service struct has been created and stored in the services mapping, the servicesLength variable is incremented by one.
+After the new `Service` struct has been created and stored in the services mapping, the `servicesLength` variable is incremented by one.
 
-Finally, the writeServiceEvent event is emitted with the relevant information about the newly created service, including the user, name, image, description, location, contact, and rate properties.
+Finally, the `writeServiceEvent` event is emitted with the relevant information about the newly created service, including the user, name, image, description, location, contact, and rate properties.
 
-Overall, this function allows a user to add a new service to the system by providing information about the service. The function creates a new Service struct, stores it in the services mapping, increments the servicesLength variable, and emits an event to log the addition of the new service.
+Overall, this function allows a user to add a new service to the system by providing information about the service. The function creates a new `Service` struct, stores it in the `services` mapping, increments the `servicesLength` variable, and emits an event to log the addition of the new service.
 
-```js
+```solidity
 function readService(uint _index) external view returns (
     address user,
     string memory name, 
@@ -776,15 +780,15 @@ function readService(uint _index) external view returns (
 ```
 The function above `readService` takes a single input parameter _index, which is an unsigned integer representing the index of the service to be read. The function is marked with the view modifier which indicates that it does not modify the state of the contract.
 
-The function then retrieves the Service struct with the given index from the services mapping and stores it in a local variable called service.
+The function then retrieves the `Service` struct with the given index from the `services` mapping and stores it in a local variable called `service`.
 
-Next, the function returns a tuple containing the various properties of the Service struct in the following order: user, name, image, description, location, contact, rate, and hiresLength.
+Next, the function returns a tuple containing the various properties of the Service struct in the following order: user, name, image, description, location, contact, rate, and `hiresLength`.
 
-The values of these properties are obtained from the Service struct by accessing the corresponding properties of the service variable. Finally, the function returns the tuple with the values of the Service struct properties.
+The values of these properties are obtained from the `Service` struct by accessing the corresponding properties of the service variable. Finally, the function returns the tuple with the values of the Service struct properties.
 
 Overall, this function allows users to read the details of a specific service by providing its index. The function retrieves the Service struct with the given index from the services mapping, extracts the relevant properties of the Service struct, and returns them as a tuple.
 
-```js
+```solidity
 function readServiceHire(uint _serviceIndex, uint _hireIndex) external view returns (
     address hirer,
     uint timestamp
@@ -821,17 +825,17 @@ function readServiceHire(uint _serviceIndex, uint _hireIndex) external view retu
 ```
 The last section of the Service Contract code includes three Solidity functions.
 
-The first function is called `readServiceHire`. It takes two input parameters _serviceIndex and _hireIndex, both of which are unsigned integers representing the index of the service and the index of the hire within that service, respectively. The function is marked with the view modifier, indicating that it does not modify the state of the contract.
+The first function is called `readServiceHire`. It takes two input parameters `_serviceIndex` and `_hireIndex`, both of which are unsigned integers representing the index of the service and the index of the hire within that service, respectively. The function is marked with the view modifier, indicating that it does not modify the state of the contract.
 
 The function retrieves the Hire struct with the given indices from the hires mapping of the corresponding Service struct. It then returns a tuple containing the hirer and timestamp properties of the Hire struct.
 
-The second function is called `hireService`. It takes a single input parameter _index, which is an unsigned integer representing the index of the service to be hired. The function modifies the state of the contract and is thus not marked with the view modifier.
+The second function is called `hireService`. It takes a single input parameter `_index`, which is an unsigned integer representing the index of the service to be hired. The function modifies the state of the contract and is thus not marked with the view modifier.
 
-The function retrieves the Service struct with the given index from the services mapping and stores it in a local variable called service. It then creates a new Hire struct with the current user's address (tx.origin) as the hirer and the current block timestamp (block.timestamp) as the timestamp.
+The function retrieves the Service struct with the given index from the services mapping and stores it in a local variable called `service`. It then creates a new Hire struct with the current user's address (tx.origin) as the hirer and the current block timestamp (block.timestamp) as the timestamp.
 
-The function then adds the new Hire struct to the hires mapping of the Service struct, with the index of the new hire being the current length of the hires mapping. It increments the hiresLength property of the Service struct to reflect the new hire.
+The function then adds the new `Hire` struct to the `hires` mapping of the `Service` struct, with the index of the new hire being the current length of the hires mapping. It increments the `hiresLength` property of the `Service` struct to reflect the new hire.
 
-Finally, the function emits a hireServiceEvent event with the relevant details of the new hire.
+Finally, the function emits a `hireServiceEvent` event with the relevant details of the new hire.
 
 The last function in the Gymnaseum Service Contract is called `readServicesLength`. It takes no input parameters and is marked with the view modifier. The function simply returns the current length of the services array, which represents the number of services that have been added to the contract.
 
@@ -839,7 +843,7 @@ This brings us to the end of the second contract which we called "GymnaseumServi
 And we have the full code below:
 
 
-```js
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.7.0 <0.9.0;
@@ -995,13 +999,14 @@ contract GymnaseumService {
 }
 ```
 
+## GymnaseumService Smart Contract Deployment
 You go ahead to deploy the Service Contract, using the same steps used in deploying the 'Gymnaseum' Contract.
 
-After successfully building our both contracts using Remix IDE, next steps would be to move the codes to our project directory on our local device, to continue building.
+After successfully building our both contracts using Remix IDE, the next steps would be to move the codes to our project directory on our local device, to continue building.
 
 We would begin by creating a "contract" folder in our project directory. In this folder we will create our first contract file which we would name `Gymnaseum.sol`, then we copy and paste all our `gymnaseum.sol` contract codes from Remix IDE.
 
-Other files we would have in our "contract" folder includes:
+Other files we would have in our "contract" folder include:
 
 `gymnaseum.abi.json` file. This would be used to store the abi for your contract.
 `erc20.abi.json` file. This would store the abi for the IERC20 interface.
@@ -1010,7 +1015,7 @@ Note: To interact with a smart contract that is deployed in bytecode, an interfa
 
 The ABI allows for the execution of functions and the reading of data. When using Remix to compile a contract, the ABI is also generated in the form of a JSON file.
 
-Next we would create another file for our "GymnaseumService Contract" which we would name `GymnaseumService.sol`.
+Next, we would create another file for our "GymnaseumService Contract" which we would name `GymnaseumService.sol`.
 
 Hence, in our contract folder, we would have the following files:
 1. Gymnaseum.sol
