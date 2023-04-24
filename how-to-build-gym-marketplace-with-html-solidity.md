@@ -10,7 +10,21 @@ hide_table_of_contents: true
 slug: /tutorials/build a gym marketplace with html and solidity
 ---
 
-# How to Build a Gym Marketplace Dapp with HTML and Solidity
+# How to Build a Gym Marketplace Dapp With HTML and Solidity
+
+## Table of Contents
+- [How to Build a Gym Marketplace Dapp With HTML and Solidity](#how-to-build-a-gym-marketplace-dapp-with-html-and-solidity)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [Requirements](#requirements)
+  - [Let's Begin](#lets-begin)
+  - [Smart Contract Development](#smart-contract-development)
+  - [Contract Deployment](#contract-deployment)
+  - [Frontend Development](#frontend-development)
+  - [The Main.js File](#the-mainjs-file)
+  - [Conclusion](#conclusion)
+  - [About the Author](#about-the-author)
 
 ## Introduction
 Celo blockchain enables fast, secure, and low-cost financial transactions. It is built on top of the Ethereum Virtual Machine (EVM), which is a standardized environment for running smart contracts (self-executing code that can be used to facilitate, verify, and enforce the negotiation or performance of a contract). 
@@ -1305,7 +1319,7 @@ Note: This is not the entirety of the HTML codes used in this project.
 
 Get the full HTML Codes here:[https://github.com/Favour-dgreat/gymnaseum-tutorial/tree/tutorial2]
 
-## main.js
+## The Main.js File
 
 The "main.js" file is another important file to be used in our project. Create the "src" folder in your root project directory, and create your 'main.js' file which will be used for our project. 
 
