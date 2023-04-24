@@ -27,27 +27,27 @@ slug: /tutorials/build a gym marketplace with html and solidity
   - [About the Author](#about-the-author)
 
 ## Introduction
-Celo blockchain enables fast, secure, and low-cost financial transactions. It is built on top of the Ethereum Virtual Machine (EVM), which is a standardized environment for running smart contracts (self-executing code that can be used to facilitate, verify, and enforce the negotiation or performance of a contract). 
-One of the main features of Celo is its use of proof-of-stake (PoS) consensus, which means that the network is secured by a group of "validators" who stake (or pledge) a certain amount of the platform's native cryptocurrency  in order to participate in the validation of transactions. 
+The [Celo](https://celo.org/) blockchain enables fast, secure, and low-cost financial transactions. It is built on top of the [Ethereum Virtual Machine (EVM)](https://ethereum.org/en/developers/docs/evm/), which is a standardized environment for running smart contracts (self-executing code that can be used to facilitate, verify, and enforce the negotiation or performance of a contract). 
+One of the main features of Celo is its use of proof-of-stake (PoS) consensus, which means that the network is secured by a group of "validators" who stake (or pledge) a certain amount of the platform's native cryptocurrency in order to participate in the validation of transactions. 
 
 ## Prerequisites
-This tutorials exposes you to how building a simple fullstack dapp (decentralized application) using react. You will need to have familiarity of the following:
+This tutorial exposes you to how to build a simple full-stack dapp (decentralized application) using React. You will need to have familiarity with the following:
 
 - Prior knowledge of HTML and CSS
 - Basic understanding of blockchain concepts
-- Have some knowledge on solidity and its concepts
+- Have some knowledge of Solidity and its concepts
 
 ## Requirements
-- **[NodeJS](https://nodejs.org/en/download)** from V12.or higher
-- A code editor or text editor. **[VSCode](https://code.visualstudio.com/download)** is recommended
+- **[Node.js](https://nodejs.org/en/download)** from V12.or higher
+- A code editor or text editor. **[VS Code](https://code.visualstudio.com/download)** is recommended
 - A terminal. **[Git Bash](https://git-scm.com/downloads)** is recommended
 - An Internet Browser and good internet connection
-- **[Remix](https://remix.ethereum.org)**
+- **[Remix IDE](https://remix.ethereum.org)**
 - **[Celo Extension Wallet](https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh?hl=en)**.
 
 ## Let's Begin
 
-Below are screenshots of what our dapp would look like
+Below are screenshots of what our dapp would look like:
 
 ![image](images/1.png)
 ![image](images/2.png)
@@ -56,7 +56,7 @@ Below are screenshots of what our dapp would look like
 
 ## Smart Contract Development
 
-We will start by building our `Gymnaseum.sol` contract first using Remix. Remix is a web based IDE that allows developers to write, test and deploy smart contracts on the Celo blockchain. 
+We will start by building our `Gymnaseum.sol` contract by using Remix. Remix is a web-based IDE that allows developers to write, test and deploy smart contracts on the Celo blockchain. 
 
 Here is a preview of the Remix IDE:
 ![image](images/remix.png)
@@ -64,9 +64,9 @@ Here is a preview of the Remix IDE:
 On Remix, We would create a new workspace and then a new file which we will call 'Gymnaseum.sol'.
 
 
-Starting out in the first line, you include a statement that specifies the license under which the code is being released, with the code below:
+Starting in the first line, you include a statement that specifies the license under which the code is being released, with the code below:
 
-```js
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 ```
@@ -78,7 +78,7 @@ To ensure the smart contract can run without any issues and is protected by a li
 
 Next, we import the Service Contract which we will also be used in this project `import './GymnaseumService.sol';` the service contract has the hire function to hire a gym trainer and pay with the celo stablecoin (cUSD). 
 
-```js
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.7.0 <0.9.0;
@@ -88,7 +88,7 @@ import './GymnaseumService.sol';
 Next up, we define an IERC20Token interface which enables us to interact with the celo stablecoin (cUSD).
 
 
-```js
+```solidity
 interface IERC20Token {
   function transfer(address, uint256) external returns (bool);
   function approve(address, uint256) external returns (bool);
@@ -110,7 +110,7 @@ You can find more information on how to use these functions and events in the Ce
 
 Following this, You define your smart contract by giving it a name. In our case our contract name is `Gymnaseum`. You can name it anything you want but ensure you keep it descriptive.
 
-```js
+```solidity
 Contract Gymnaseum {
 
   struct Product {
@@ -143,12 +143,12 @@ For this tutorial, these would be the variables that you would store in the stru
 
 In the next line, you define a state variable productsLength, this is going to keep track of the products in our contract. It is of a `uint` type which means it can only store integer values. [(Learn more about data types in solidity)](https://docs.soliditylang.org/en/latest/types.html)
 
-```js
+```solidity
 uint internal productsLength = 0;
 ```
 We also define the visibility of our variable to `internal` which means it cannot be accessed from external smart contracts or addresses and can only be modified within the smart contract. ([Learn more about visiblity](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)). Also, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, you need to know the address of the token. So we define this also with the code below:
 
-```js
+```solidity
   address payable internal onwerAddress;
   ServiceInterface internal ServiceContract;  
 ```
@@ -158,20 +158,20 @@ The purpose of an interface is to enforce a defined set of properties and to exe
 Next in our smartcontract is a mapping function to handle multiple products, a mapping is needed where you can access the value of a product through their key. 
 To create a mapping, you use the keyword `mapping` and assign a key type to a value type. In this case, your key would be an integer and the value would be the struct Product we just created.
 
-```js
+```solidity
   mapping (uint => Product) internal products;
 ```
 
 As stated earlier, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, you need to know the address of the token. Which we are declaring in the code below:
 
-```js
+```solidity
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 ```
 
 We also define a constructor in the code below. The msg.sender function returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
 The ServiceContract function is assigned to the ServiceInterface.
 
-```js
+```solidity
 constructor(address serviceContractAddress) {
     onwerAddress = payable(msg.sender);
     ServiceContract = ServiceInterface(address(serviceContractAddress));
@@ -180,7 +180,7 @@ constructor(address serviceContractAddress) {
 
 So far, we have our code as shown below:
 
-```js
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.7.0 <0.9.0;
@@ -215,7 +215,7 @@ contract Gymnaseum {
 ```
 In the next section, you will define a function to add the products to the smart contract.
 
-```js
+```solidity
    function writeProduct(
     string memory _name,
     string memory _image,
@@ -248,7 +248,7 @@ You also need to assign values to the other variables using the provided paramet
 
 
 Next, we would create a function that would add the service to the ServiceContract.
-```js
+```solidity
     function addService(
     string memory _name,
     string memory _image,
@@ -263,7 +263,7 @@ Next, we would create a function that would add the service to the ServiceContra
 
 Next, we would create a function that would read the products created in the 'writeProduct' function.
 
-```js
+```solidity
    function readProduct(uint _index) public view returns (
     address payable owner,
     string memory name, 
@@ -297,7 +297,7 @@ The function needs to return the address of the owner, the strings and the uint 
 
 Proceeding, we would create a function that gets the Service added to the Service contract. 
 
-```js
+```solidity
    function getService(uint _index) public view returns(
     address user,
     string memory name, 
@@ -320,7 +320,7 @@ The first parameter is the address of the user, the following parameters are the
 The `hiresLength`parameter tracks when a service is hired already.
 
 Next we will call a function to get Service Hire in the block of code below:
-```js
+```solidity
    function hireService(
    uint _index,
    uint _price,
@@ -352,7 +352,7 @@ The function will use the require function to make sure that the sender of this 
 
 The next function, the `buyProduct` function which handles the buying of the product is a Public function and also a payble function which contains most of the parameters already discussed.
 
-```js
+```solidity
    function buyProduct(uint _index) public payable  {
     require(
       IERC20Token(cUsdTokenAddress).transferFrom(
@@ -376,7 +376,7 @@ The next function, the `buyProduct` function which handles the buying of the pro
 
 Next in our contract, we will create two public functions that will iterate over the products and services and return the total number of products and services.
 
-```js
+```jssolidity
    function getProductsLength() public view returns (uint) {
     return (productsLength);
   }
@@ -384,7 +384,7 @@ Next in our contract, we will create two public functions that will iterate over
 
 The `getProductsLength` simply returns the number of products that has been stored on this contract.
 
-```js
+```solidity
    function getServicesLength() public view returns (uint) {
     return ServiceContract.readServicesLength();
   }
@@ -396,7 +396,7 @@ This brings us to the end of the first contract which we called "Gymnaseum".
 
 And we have the full code below:
 
-```js
+```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.7.0 <0.9.0;
