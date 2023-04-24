@@ -50,7 +50,7 @@ Here is a preview of the Remix IDE:
 On Remix, We would create a new workspace and then a new file which we will call 'Gymnaseum.sol'.
 
 
-Starting out in the first line, you include a statement that specifies the license under which the code is being released.
+Starting out in the first line, you include a statement that specifies the license under which the code is being released, with the code below:
 
 ```js
 // SPDX-License-Identifier: MIT
