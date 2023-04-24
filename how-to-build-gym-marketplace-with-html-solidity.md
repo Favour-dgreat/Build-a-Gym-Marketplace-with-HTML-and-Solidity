@@ -1029,9 +1029,9 @@ This concludes our Contract Section of this tutorial, you can find all contract 
 
 In the next step of this tutorial, we will build the Frontend interface to interact with our SmartContracts using HTML.
 
-First off, you would create your public folder, in the root project directory. In this folder you will create your "index.html" file.
+First off, you would create your public folder, in the root project directory. In this folder, you will create your `index.html` file.
 
-Open the "index.html" file located in the public folder of your project, and let's begin.
+Open the `index.html` file located in the public folder of your project, and let's begin.
 
 ```html
 <!DOCTYPE html>
@@ -1053,7 +1053,7 @@ Open the "index.html" file located in the public folder of your project, and let
 ```
 Start by declaring the document type, then add an HTML tag, create a head element, and include meta tags. 
 
-Next in your HTML file, you will import some external stylesheets.
+Next in your HTML file, you will import some external stylesheets:
 
 ```html
  <link
@@ -1086,7 +1086,7 @@ rel="stylesheet"
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
 ```
-Next in our HTML before we close our "head" tag we will add some internal styles.
+Next in our HTML before we close our "head" tag we will add some internal styles:
 
 ```html
 <style>
@@ -1173,9 +1173,10 @@ Next in our HTML before we close our "head" tag we will add some internal styles
   </style>
   </head>
 ```
-Note: This is not in entirety all the CSS used for our Frontend application, you are allowed to add more CSS Code to improve the styling.
+>**_Note_**: This is not in entirety all the CSS used for our Frontend application, you are allowed to add more CSS Code to improve the styling.
 
-Next in our html file, we will add our frontend HTML Codes in the "body" tag along with some scripts linking to external JS files used in this project. 
+Next in our HTML file, we will add our frontend HTML Codes in the "body" tag along with some scripts linking to external JS files used in this project:
+
 ```html
 <body>
 
@@ -1320,9 +1321,9 @@ Next in our html file, we will add our frontend HTML Codes in the "body" tag alo
   
   </html>
 ```
-Note: This is not the entirety of the HTML codes used in this project. 
+>**_Note_**: This is not the entirety of the HTML code used in this project. 
 
-Get the full HTML Codes here:[https://github.com/Favour-dgreat/gymnaseum-tutorial/tree/tutorial2]
+Get the full HTML code here:[https://github.com/Favour-dgreat/gymnaseum-tutorial/tree/tutorial2]
 
 ## The Main.js File
 
@@ -1330,14 +1331,14 @@ The "main.js" file is another important file to be used in our project. Create t
 
 Let's get started!
 
-We will start by importing the web3, contractkit and bignumber js objects from their libraries.
+We will start by importing the web3, contractkit, and bignumber js objects from their libraries.
 
 Celo's operations often deal with numbers that are too large for Javascript to handle. To handle these numbers, we will use bignumber.js.
 
 Create a variable called `ERC20_DECIMALS` and set its value to 18. By default, the ERC20 interface uses 18 decimal places.
 
 On Remix, after the deployment of your contract, you will find the address to that contract which you need to interact with the functionality in your smart contract.
-Create a variable called `GContractAddress` and assign it the contract address gotten from remix. Also create a variable called `erc20Address` for the erc20Address, in the code block below:
+Create a variable called `GContractAddress` and assign it the contract address gotten from Remix. Also create a variable called `erc20Address` for the erc20Address, in the code block below:
 
 ```js
 import Web3 from 'web3'
@@ -1353,7 +1354,7 @@ let kit, contract;
 let products = [], services = [];
 ```
 
-The next block of code in our "main.js" file is an asynchronous function called connectCeloWallet that allows a user to connect to the Celo Blockchain and read the balance of their account. The function will perform several checks and actions to ensure that the user has the necessary tools and permissions to interact with the Celo Blockchain.
+The next block of code in our "main.js" file is an asynchronous function called `connectCeloWallet` that allows a user to connect to the Celo Blockchain and read the balance of their account. The function will perform several checks and actions to ensure that the user has the necessary tools and permissions to interact with the Celo Blockchain.
 
 ```js
   const connectCeloWallet = async function () {
@@ -1385,13 +1386,13 @@ In the code block above, the first check carried out is to check if the user has
 
 If the `window.celo` object does exist, a notification will be sent to the user in the console to approve this DApp and try the `window.celo.enable()` function. This will open a pop-up dialogue in the UI that asks for the user's permission to connect the DApp to the CeloExtensionWallet.
 
-If an error is caught during this process, the user would be informed that they must approve the dialogue to use the DApp.
+If an error is caught during this process, the user would be informed that they must approve the dialogue to use the dApp.
 
-After the user approves the DApp, create a web3 object using the window.celo object as the provider. This web3 object can then be used to create a new kit instance, which will be saved to the kit state. This kit instance will have the functionality to interact with the Celo Blockchain.
+After the user approves the dApp, create a `web3` object using the `window.celo` object as the provider. This `web3` object can then be used to create a new `kit` instance, which will be saved to the `kit` state. This kit instance will have the functionality to interact with the Celo Blockchain.
 
-You would then access the user's account by utilizing the web3 object and kit instance that have been created. 
+You would then access the user's account by utilizing the `web3` object and `kit` instance that has been created. 
 
-After creating the new kit instance, use the method kit.web3.eth.getAccounts() to get an array of the connected user's addresses. Use the first address from this array and set it as the default user address by using kit.defaultAccount. This will allow the address to be used globally in the DApp.
+After creating the new kit instance, use the method `kit.web3.eth.getAccounts()` to get an array of the connected user's addresses. Use the first address from this array and set it as the default user address by using `kit.defaultAccount`. This will allow the address to be used globally in the DApp.
 
 
 ```js
@@ -1409,7 +1410,7 @@ async function paymentApproval(_price) {
 
 Next in the code block above, we have another async function. The code below has a function `paymentApproval(_price)` that takes one parameter `_price` as input. 
 
-The function carries out an approval transaction for a specified amount of tokens. The tokens are an ERC-20 token since the function initializes a new instance of the ERCContract.
+The function carries out an approval transaction for a specified amount of tokens. The tokens are ERC-20 tokens since the function initializes a new instance of the `ERCContract`.
 
 The function uses the Web3.js library to interact with the blockchain. Specifically, it uses the Contract class from Web3.js to create a new instance of an ERC-20 contract with the erc20Abi and erc20Address parameters.
 
@@ -1429,13 +1430,13 @@ Now we will go ahead to create an asynchronous function called `getBalance` that
   document.querySelector("#balance").textContent = cUSDBalance
 }
 ```
-We Start by calling the `kit.getTotalBalance(kit.defaultAccount)` method, which passes the default account. This method returns the default account balance in the form of an object that contains the amounts of cUSD tokens. The returned balance is then stored in the `cUSDBalance` variable.
+We start by calling the `kit.getTotalBalance(kit.defaultAccount)` method, which passes the default account. This method returns the default account balance in the form of an object that contains the amounts of cUSD tokens. The returned balance is then stored in the `cUSDBalance` variable.
 
-The next step is to extract the cUSD balance by using the `.cUSD` properties respectively. Then we shift the value by -ERC20_DECIMALS which is a way to represent the balance in terms of smaller units in our case 18 decimal places, and then it's converting the value to fixed 2 decimal points. These values are stored in the `cUSDBalance` variable.
+The next step is to extract the cUSD balance by using the `.cUSD` properties respectively. Then we shift the value by -ERC20_DECIMALS which is a way to represent the balance in terms of smaller units in our case `18` decimal places, and then it's converting the value to fixed `2` decimal points. These values are stored in the `cUSDBalance` variable.
 Lastly, we render the value of `cUSDBalance` to an HTML element with the ID of balance. 
 
 
-Up next, we create a function called `getProducts` that retrieves the products information from the smart contract and updates the corresponding state variables.
+Up next, we create a function called `getProducts` that retrieves all products' information from the smart contract and updates the corresponding state variables.
 
 ```js
  const getProducts = async function() {
@@ -1468,7 +1469,7 @@ In the code block above:
 
 The variable `_productsLength` calls the `contract.methods.getProductsLength().call()` method, which returns the number of products that are stored in the smart contract.
 
-Next we create a new variable, `p` which retrieves the information for the current index by calling the `contract.methods.readProduct(i).call()` method. This method returns an array of values, such as owner, p.name, p.description, p.image, p.price, p.location, p.serviceFee and p.price. These values are then stored in an object that is passed to the resolve function of the promise, along with the index.
+Next, we create a new variable, `p` which retrieves the information for the current index by calling the `contract.methods.readProduct(i).call()` method. This method returns an array of values, such as owner, p.name, p.description, p.image, p.price, p.location, p.serviceFee, and p.price. These values are then stored in an object that is passed to the resolve function of the promise, along with the index.
 
 The `_products` promise is then pushed to the `_product` array. After the loop is finished, wait for all promises in the `_product` array to be resolved by calling `await Promise.all(_products)`, this will make sure that all the products have been retrieved before moving on. Then it's updating the state with the products array, by calling `renderProducts()`.
 
@@ -1493,7 +1494,7 @@ Next step we create another asynchronous function called `getServiceHires`:
 }
 ```
 
-The asynchronous function `getServiceHires(serviceIndex, hiresLength)` that takes two parameters "serviceIndex" and "hiresLength" as input. 
+The asynchronous function `getServiceHires(serviceIndex, hiresLength)` takes two parameters "serviceIndex" and "hiresLength" as input. 
 
 The function queries a smart contract method and retrieves a list of service hires for a given service.
 
@@ -1501,7 +1502,7 @@ The function first initializes an empty array `_hires` that will be used to stor
 
 Next, a for loop is initiated that will run for hiresLength iterations. During each iteration, a new Promise object is created and stored in the `_hire` variable.
 
-This Promise uses the `call()` function to execute a smart contract method `getServiceHire(serviceIndex, index)` that returns the hire information for the given "serviceIndex" and "index" value.
+This Promise uses the `call()` function to execute a smart contract method `getServiceHire(serviceIndex, index)` that returns the hire information for the given "serviceIndex" and "index" values.
 
 If the call is successful, the Promise is resolved with an object containing the hire information, such as the "hire index", "hirer address", and "hire timestamp". 
 
@@ -1509,11 +1510,11 @@ The timestamp is converted to a human-readable format using the `toUTCString()` 
 
 The resolved Promise is then pushed to the `_hires` array using the `push()` function.
 
-After all iterations have completed, the function returns a new Promise that resolves with an array of all the hires. 
+After all iterations have been completed, the function returns a new Promise that resolves with an array of all the hires. 
 
 In this case, `Promise.all(_hires)` returns a Promise that resolves with an array containing all the hire objects resolved from the _hire Promises. The await keyword is used to wait for the `Promise.all()` function to complete and return the array of hires before returning it as the final result of the `getServiceHires()` function.
 
-Moving forward in the next block of code we create another asynchronous function which retrieves information about the services stored in the smart contract.
+Moving forward in the next block of code we create another asynchronous function that retrieves information about the services stored in the smart contract.
 
 ```js
   const getServices = async function() {
@@ -1548,7 +1549,7 @@ The code above defines an asynchronous function `getServices()`, which retrieves
 
 The function first calls a smart contract method `getServicesLength()` using the `call()` function to retrieve the length of the list of services offered in the contract. The length is stored in the `_servicesLength` variable, and it is displayed on the webpage as the total number of services.
 
-Next, the function initializes an empty array `_services` that will be used to store the retrieved services.
+Next, the function initializes an empty array of `_services` that will be used to store the retrieved services.
 
 A for loop is then initiated that will run for `_servicesLength` iterations. During each iteration, a new Promise object is created and stored in the `_service` variable. This Promise uses the `call()` function to execute a smart contract method `getService(i)` that returns the service information for the given index i.
 
@@ -1560,9 +1561,9 @@ The hires attribute is populated by calling the `getServiceHires(i, s.hiresLengt
 
 The resolved Promise is then pushed to the `_services` array using the push() function.
 
-After all iterations have completed, the function returns a new Promise that resolves with an array of all the services. This is achieved using the Promise.all() function, which takes an array of Promises as input and returns a Promise that resolves with an array of the resolved values of each Promise in the input array.
+After all iterations have been completed, the function returns a new Promise that resolves with an array of all the services. This is achieved using the Promise.all() function, which takes an array of Promises as input and returns a Promise that resolves with an array of the resolved values of each Promise in the input array.
 
-In this case, `Promise.all(_services)` returns a Promise that resolves with an array containing all the service objects resolved from the _service Promises. The await keyword is used to wait for the Promise.all() function to complete and return the array of services before assigning it to the services variable.
+In this case, `Promise.all(_services)` returns a Promise that resolves with an array containing all the service objects resolved from the `_service` Promises. The await keyword is used to wait for the Promise.all() function to complete and return the array of services before assigning it to the services variable.
 
 Finally, the `renderServices()` function is called to display the retrieved services on the webpage.
 
@@ -1570,7 +1571,7 @@ In the next section of our code above we will add an event listener to a button 
 
 Next, we will have a notification message which is displayed to the user using the `serviceNotification()` function. The message informs the user that the service is being added to the contract.
 
-Also we will have an asynchronous try-catch code block that will be used to execute a smart contract method `addService(...serviceParams)` using the `send()` function to add the new service to the contract. The function takes the `serviceParams` array as input and sends the transaction from the default account stored in `kit.defaultAccount`. If the transaction is successful, the `then()`function is called and another notification is displayed informing the user that the service was added successfully. The `getServices()` function is then called to retrieve the updated list of services and display them on the webpage. If the transaction fails, the `catch()` function is called and an error message is displayed to the user using the `serviceNotification()` function.
+Also, we will have an asynchronous try-catch code block that will be used to execute a smart contract method `addService(...serviceParams)` using the `send()` function to add the new service to the contract. The function takes the `serviceParams` array as input and sends the transaction from the default account stored in `kit.defaultAccount`. If the transaction is successful, the `then()`function is called and another notification is displayed informing the user that the service was added successfully. The `getServices()` function is then called to retrieve the updated list of services and display them on the webpage. If the transaction fails, the `catch()` function is called and an error message is displayed to the user using the `serviceNotification()` function.
 
 The last block of code adds an event listener to the window object that executes an async function when the webpage is loaded. This function calls the `notification()` function to display a loading message to the user. The function then calls the `connectCeloWallet()`, `getBalance()`, `getProducts()`, and `getServices()` functions in sequence to connect the Celo wallet, retrieve the balance of the default account, retrieve the list of products, and retrieve the list of services offered by the contract.
 
@@ -1641,7 +1642,7 @@ function renderServices() {
 }
 ```
 
-Next in our codes we will create the `renderServiceHires` function, which renders the list of service hires for a particular service. It takes two parameters: `index`, which is the index of the service for which the hires are being rendered, and `hires`, which is an array of hire objects. The function first generates a unique ID for the service hires list using the `index` parameter. It then checks if there are any hires for the service by checking if the `hires` parameter is truthy (i.e., not null, undefined, or false).
+Next in our codes, we will create the `renderServiceHires` function, which renders the list of service hires for a particular service. It takes two parameters: `index`, which is the index of the service for which the hires are being rendered, and `hires`, which is an array of hire objects. The function first generates a unique ID for the service hires list using the `index` parameter. It then checks if there are any hires for the service by checking if the `hires` parameter is truthy (i.e., not null, undefined, or false).
 
 If there are hires, the function clears the existing hires list for the service (if any) and then iterates through each hire in the `hires` array. For each hire, it creates a new Unordered list `<ul>` element using `document.createElement()`, populates it with the hire details using the `hireTemplate` function, and appends it to the service hires list using `document.getElementById().appendChild()`.
 
@@ -1672,13 +1673,14 @@ function hireTemplate(_hire) {
   `
 }
 ```
-Next in our codes we will create two functions: `productTemplate` and `serviceTemplate`.
+Next in our code, we will create two functions: `productTemplate` and `serviceTemplate`.
 
 The `productTemplate` function will return an HTML template for a product card. It takes a `_product` object as input and uses its properties to fill in the various sections of the card, including the product image, name, description, location, and price. The `identiconTemplate` function is also called to generate an identicon based on the owner's address. The `toFixed` method is used to format the price and fee properties to two decimal places. While the `serviceTemplate` function will return an HTML template for a service card. It takes a `_service` object as input and uses its properties to fill in the various sections of the card, including the service image, name, description, location, and rate. It also calls the `renderServiceHires` function to render the hires section for the service. The `identiconTemplate` function is also called to generate an identicon based on the user's address. The `toFixed` method is used to format the rate property to two decimal places.
 
 The service card also includes a modal that displays the list of hires for the service when the "Hires" button is clicked. 
 
 Here is the code below:
+
 ```js
 function productTemplate(_product) {
   return `
@@ -1794,7 +1796,7 @@ function identiconTemplate(_address) {
   `
 }
 ```
-Next in our code we will create various function to handle the displaying and hiding of notifications for both the products and services.
+Next in our code, we will create various functions to handle the displaying and hiding of notifications for both the products and services.
 
 Here is the code below:
 
@@ -1817,15 +1819,15 @@ function serviceNotificationOff() {
   document.querySelector(".alert-service").style.display = "none"
 }
 ```
-Next, the code below will have an event listener which is triggered when the button with class Name "buyBtn" is clicked. 
+Next, the code below will have an event listener which is triggered when the button with the className "buyBtn" is clicked. 
 
 When the button is clicked, the code proceeds to execute two asynchronous functions.
 
-The first function calls `paymentApproval` function with the sum of the product price and fee. This function likely requests the user's approval to spend a certain amount of the ERC20 token, which is the payment required to purchase the product.
+The first function calls the `paymentApproval` function with the sum of the product price and fee. This function likely requests the user's approval to spend a certain amount of the ERC20 token, which is the payment required to purchase the product.
 
 If the payment is approved, the second function `contract.methods.buyProduct(index).send()` is called to execute the `buyProduct` function on the smart contract. The `index` variable is passed as an argument to specify which product to buy.
 
-If the transaction is successful, the function executes the `notification()` function with a message of success and then calls `getBalance()` and `getProducts()` functions to update the user's balance and the products listed on the page.
+If the transaction is successful, the function executes the `notification()` function with a message of success and then calls the `getBalance()` and `getProducts()` functions to update the user's balance and the products listed on the page.
 
 If either of the two functions throws an error, the code executes the `notification()` function with an error message.
 
@@ -1893,7 +1895,7 @@ document.querySelector("#GymnaseumServices").addEventListener("click", async (e)
 
 ## Conclusion
 Congratulations 🎉, this brings us to the end of this project. 
-You can follow or use this project as a reference to edit yours and get the required files, images e.t.c. <https://github.com/Favour-dgreat/gymnaseum-tutorial>.
+You can follow or use this project as a reference to edit yours and get the required files, images, etc. <https://github.com/Favour-dgreat/gymnaseum-tutorial>.
 
 You can also check out the preview of our project (this is what your project should look like at the end of this tutorial): <https://favour-dgreat.github.io/gymnaseum-dacade/>
 
