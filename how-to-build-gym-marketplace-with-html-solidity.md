@@ -1874,7 +1874,9 @@ document.querySelector("#GymnaseumServices").addEventListener("click", async (e)
 
 ## Conclusion
 Congratulations 🎉, this brings us to the end of this project. 
-You can follow or use this project as a reference to edit yours and get the required files, images e.t.c. <https://github.com/Favour-dgreat/gymnaseum-tutorial>
+You can follow or use this project as a reference to edit yours and get the required files, images e.t.c. <https://github.com/Favour-dgreat/gymnaseum-tutorial>.
+
+You can also check out the preview of our project (this is what your project should look like at the end of this tutorial): <https://favour-dgreat.github.io/gymnaseum-dacade/>
 
 
 ## About the Author
