@@ -148,7 +148,7 @@ To create a mapping, you use the keyword `mapping` and assign a key type to a va
   mapping (uint => Product) internal products;
 ```
 
-As stated earlier, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, you need to know the address of the token. Which we are doing in the code below:
+As stated earlier, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, you need to know the address of the token. Which we are declaring in the code below:
 
 ```js
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
@@ -164,7 +164,7 @@ constructor(address serviceContractAddress) {
   }
 ```
 
-So far, we have our code as show below:
+So far, we have our code as shown below:
 
 ```js
 // SPDX-License-Identifier: MIT
