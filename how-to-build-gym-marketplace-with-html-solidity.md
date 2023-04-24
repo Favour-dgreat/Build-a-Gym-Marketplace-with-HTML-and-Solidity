@@ -38,7 +38,7 @@ Below are screenshots of what our dapp would look like
 ![image](images/1.png)
 ![image](images/2.png)
 
-_This tutorial is targeted at total beginners with basic prior knowledge of HTML and CSS. _
+*This tutorial is targeted at total beginners with basic prior knowledge of HTML and CSS.*
 
 ## Smart Contract Development
 
