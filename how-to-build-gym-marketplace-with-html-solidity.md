@@ -10,7 +10,7 @@ hide_table_of_contents: true
 slug: /tutorials/build a gym marketplace with html and solidity
 ---
 
-# How to Build a Car Marketplace dapp using React
+# How to Build a Gym Marketplace Dapp with HTML and Solidity
 
 ## Introduction
 Celo blockchain enables fast, secure, and low-cost financial transactions. It is built on top of the Ethereum Virtual Machine (EVM), which is a standardized environment for running smart contracts (self-executing code that can be used to facilitate, verify, and enforce the negotiation or performance of a contract). 
