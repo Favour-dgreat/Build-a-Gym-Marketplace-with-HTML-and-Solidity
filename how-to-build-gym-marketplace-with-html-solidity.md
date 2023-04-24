@@ -1153,7 +1153,7 @@ Next in our HTML before we close our "head" tag we will add some internal styles
 }
   </style>
   </head>
-
+```
 Note: This is not in entirety all the CSS used for our Frontend application, you are allowed to add more CSS Code to improve the styling.
 
 Next in our html file, we will add our frontend HTML Codes in the "body" tag along with some scripts linking to external JS files used in this project. 
