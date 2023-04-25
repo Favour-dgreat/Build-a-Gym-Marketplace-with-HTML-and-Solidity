@@ -1,46 +1,49 @@
 ---
-title: How to build a Gym Marketplace on the Celo Blockchain using HTML and Solidity
-description: This tutorial is targeted at total beginners to build with Solidity using HTML
-authors:
-- name: Favour Dgreat
-  title: Mobile Developer, 
-  url: https://github.com/Favour-dgreat
-tags: [solidity, html, celo]
+Title: How to build a Gym Marketplace on the Celo Blockchain using HTML & Solidity
+Description: This tutorial is targeted for beginners in order to build Gym Marketplace using HTML & Solidity.
+Authors:
+- Name: Favour Dgreat
+  Title: Mobile Developer, 
+  Url: https://github.com/Favour-dgreat
+Tags: [solidity, html, celo]
 hide_table_of_contents: true
-slug: /tutorials/build a gym marketplace with html and solidity
+Slug: /tutorials/build a gym marketplace with html and solidity
 ---
 
-# How to Build a Gym Marketplace Dapp with HTML and Solidity
+# How to Build a Gym Marketplace Dapp with HTML & Solidity:
 
-## Introduction
-Celo blockchain enables fast, secure, and low-cost financial transactions. It is built on top of the Ethereum Virtual Machine (EVM), which is a standardized environment for running smart contracts (self-executing code that can be used to facilitate, verify, and enforce the negotiation or performance of a contract). 
-One of the main features of Celo is its use of proof-of-stake (PoS) consensus, which means that the network is secured by a group of "validators" who stake (or pledge) a certain amount of the platform's native cryptocurrency  in order to participate in the validation of transactions. 
+## Introduction:
 
-## Prerequisites
-This tutorials exposes you to how building a simple fullstack dapp (decentralized application) using react. You will need to have familiarity of the following:
+Celo is a mobile-first blockchain platform that aims to make financial tools accessible to anyone with a mobile phone. Celo blockchain enables fast, secure, and low-cost financial transactions. It is built on top of the Ethereum Virtual Machine (EVM), which is a standardized environment for running Smart Contracts (self-executing code that can be used to facilitate, verify, and enforce the negotiation or performance of a contract). 
+One of the main features of Celo is its use of Proof-of-Stake (PoS) consensus, which means that the network is secured by a group of "validators" who stake (or pledge) a certain amount of the platform's native cryptocurrency  in order to participate in the validation of transactions. 
 
-- Prior knowledge of HTML and CSS
-- Basic understanding of blockchain concepts
-- Have some knowledge on solidity and its concepts
+## Pre-requisites:
 
-## Requirements
-- **[NodeJS](https://nodejs.org/en/download)** from V12.or higher
-- A code editor or text editor. **[VSCode](https://code.visualstudio.com/download)** is recommended
-- A terminal. **[Git Bash](https://git-scm.com/downloads)** is recommended
-- An Internet Browser and good internet connection
+This tutorials shows you how building a simple fullstack dapp (decentralized application) using react. You will need to have familiarity of the following:
+
+- Knowledge of HTML and CSS.
+- Understanding of blockchain & its concepts.
+- Knowledge on [solidity](https://sourceforge.net/projects/solidity.mirror/) and its concepts.
+
+## Requirements:
+
+- **[NodeJS](https://nodejs.org/en/download)** from V12.or higher.
+- A code editor or text editor. **[VSCode](https://code.visualstudio.com/download)** is recommended.
+- A terminal. **[Git Bash](https://git-scm.com/downloads)** is recommended.
+- An Internet Browser and good internet connection.
 - **[Remix](https://remix.ethereum.org)**
 - **[Celo Extension Wallet](https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh?hl=en)**.
 
-## Let's Begin
+## Let's Begin:
 
-Below are screenshots of what our dapp would look like
+Below are the screenshots of what our dapp would look like finally:
 
 ![image](images/1.png)
 ![image](images/2.png)
 
-*This tutorial is targeted at total beginners with basic prior knowledge of HTML and CSS.*
+*This tutorial is targeted for beginners with basic knowledge of HTML and CSS.*
 
-## Smart Contract Development
+## Smart Contract Development:
 
 We will start by building our `Gymnaseum.sol` contract first using Remix. Remix is a web based IDE that allows developers to write, test and deploy smart contracts on the Celo blockchain. 
 
@@ -48,7 +51,6 @@ Here is a preview of the Remix IDE:
 ![image](images/remix.png)
 
 On Remix, We would create a new workspace and then a new file which we will call 'Gymnaseum.sol'.
-
 
 Starting out in the first line, you include a statement that specifies the license under which the code is being released, with the code below:
 
@@ -59,8 +61,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 This license governs how the code can be used, and it is important to ensure that the correct license is used to avoid any legal issues. A resource such as SPDX can be used to help identify a suitable license.
 
-To ensure the smart contract can run without any issues and is protected by a license, it's important to indicate the version of the compiler and the license it uses. This can be done by specifying the compiler version with the `pragma` keyword, and the license used, by including a statement that specifies the license at the beginning of the contract code.
-
+To ensure the Smart Contract can run without any issues and is protected by a license, it's important to indicate the version of the compiler and the license it uses. This can be done by specifying the compiler version with the `pragma` keyword, and the license used, by including a statement that specifies the license at the beginning of the contract code.
 
 Next, we import the Service Contract which we will also be used in this project `import './GymnaseumService.sol';` the service contract has the hire function to hire a gym trainer and pay with the celo stablecoin (cUSD). 
 
@@ -72,7 +73,6 @@ import './GymnaseumService.sol';
 ```
 
 Next up, we define an IERC20Token interface which enables us to interact with the celo stablecoin (cUSD).
-
 
 ```js
 interface IERC20Token {
@@ -88,7 +88,7 @@ interface IERC20Token {
 }
 ```
 
-ERC-20 tokens are a widely-used standard for creating digital assets on the Ethereum blockchain, and cUSD is one of them.
+**ERC-20** tokens are a widely-used standard for creating digital assets on the Ethereum blockchain, and cUSD is one of them.
 
 These tokens have pre-defined functions and events that can be easily used in contracts, and do not require any additional implementation. For example, you will be using the ERC-20 token's interface to interact with it, so that your contract can communicate with the token.
 
@@ -117,6 +117,7 @@ After defining the single variables used in the contract, you want to give the p
 To do this, you would require a struct data type with the keyword `struct` and give it multiple properties. ([Learn about structs here](https://docs.soliditylang.org/en/latest/types.html#structs))
 
 For this tutorial, these would be the variables that you would store in the struct:
+
 1. owner - This would store the address of the owner of a particular Product as all products in the marketplace has an owner. This has the address data type.
 2. name - This stores the name of the product. This has a String data type.
 3. image - This stores the image of the product gotten from a URL and it has a string data type.
@@ -126,22 +127,21 @@ For this tutorial, these would be the variables that you would store in the stru
 6. price - This stores the amount of the product. Its also a number so it has a type of uint.
 7. sold - This keeps track of when a product is sold or not and it has a type of Boolean.
 
-
-In the next line, you define a state variable productsLength, this is going to keep track of the products in our contract. It is of a `uint` type which means it can only store integer values. [(Learn more about data types in solidity)](https://docs.soliditylang.org/en/latest/types.html)
+In the next line, you have to define a state variable productsLength, this is going to keep track of the products in our contract. It is of a `uint` type which means it can only store integer values. [(Learn more about data types in solidity)](https://docs.soliditylang.org/en/latest/types.html)
 
 ```js
 uint internal productsLength = 0;
 ```
-We also define the visibility of our variable to `internal` which means it cannot be accessed from external smart contracts or addresses and can only be modified within the smart contract. ([Learn more about visiblity](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)). Also, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, you need to know the address of the token. So we define this also with the code below:
+We also define the visibility of our variable to `internal` which means it cannot be accessed from external smart contracts or addresses and can only be modified within the smart contract. ([Learn more about visiblity](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)). Also, for us to interact with the cUSD ERC-20 token on the Celo alfajores test network, we need to know the address of the token. So we define this also with the code below:
 
 ```js
   address payable internal onwerAddress;
   ServiceInterface internal ServiceContract;  
 ```
-In the code above we also interfaced the Service Contract.
+In the code above, we have also interfaced the Service Contract.
 The purpose of an interface is to enforce a defined set of properties and to execute specific functions in another object.([Learn more about Interfaces in Solidity Smart Contracts](https://cryptomarketpool.com/interface-in-solidity-smart-contracts/)).
 
-Next in our smartcontract is a mapping function to handle multiple products, a mapping is needed where you can access the value of a product through their key. 
+Next in our Smart Contract, a mapping function is used to handle multiple products, as it is needed to access the value of a product through their key. 
 To create a mapping, you use the keyword `mapping` and assign a key type to a value type. In this case, your key would be an integer and the value would be the struct Product we just created.
 
 ```js
@@ -154,8 +154,8 @@ As stated earlier, for us to interact with the cUSD ERC-20 token on the Celo alf
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 ```
 
-We also define a constructor in the code below. The msg.sender function returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
-The ServiceContract function is assigned to the ServiceInterface.
+We also define a constructor in the code below. The `msg.sender` function returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
+The `ServiceContract` function is assigned to the `ServiceInterface`.
 
 ```js
 constructor(address serviceContractAddress) {
@@ -171,10 +171,9 @@ So far, we have our code as shown below:
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import './GymnaseumService.sol';
+import './GymnasiumService.sol';
 
-
-contract Gymnaseum {
+contract Gymnasium {
 
   struct Product {
     address payable owner;
@@ -199,7 +198,7 @@ contract Gymnaseum {
   }
 }
 ```
-In the next section, you will define a function to add the products to the smart contract.
+In the next section, you will have to define a function to add the products to the Smart Contract.
 
 ```js
    function writeProduct(
@@ -225,15 +224,14 @@ In the next section, you will define a function to add the products to the smart
   }
 ```
 
-You have to specify the parameters type in the function. In this case, we need to pass the name, description, image, location, price and serviceFee (all with an underscore to differentiate them from the struct values) as parameters to the function. 
+You will have to specify the parameters type in the function. In this case, we need to pass the name, description, image, location, price and serviceFee (all with an underscore to differentiate them from the struct values) as parameters to the function. 
 
 Next, associate the key productsLength with a new Product structure in the products mapping.
 
-The msg.sender function as discussed earlier returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
+The `msg.sender` function as discussed earlier returns the address of the entity that initiated the call and is capable of receiving payments. This address will be stored as the owner's address.
 You also need to assign values to the other variables using the provided parameters.
 
-
-Next, we would create a function that would add the service to the ServiceContract.
+Next, we would create a function that would add the service to the `ServiceContract`.
 ```js
     function addService(
     string memory _name,
@@ -247,7 +245,7 @@ Next, we would create a function that would add the service to the ServiceContra
   }
 ```
 
-Next, we would create a function that would read the products created in the 'writeProduct' function.
+Next, we would create a function that would read the products created in the `writeProduct` function.
 
 ```js
    function readProduct(uint _index) public view returns (
@@ -280,7 +278,6 @@ In this case, it would be a tuple corresponding to the variables declared in the
 
 The function needs to return the address of the owner, the strings and the uint values of `serviceFee`, `price`, and `sold`.
 
-
 Proceeding, we would create a function that gets the Service added to the Service contract. 
 
 ```js
@@ -298,8 +295,7 @@ Proceeding, we would create a function that gets the Service added to the Servic
   }
 ```
 
-The "getService" function, which is public, takes in an index of type uint as a parameter.
-
+The `getServic` function, which is public, takes in an index of type uint as a parameter.
 
 The first parameter is the address of the user, the following parameters are the strings and the uint values of `rate`, and `hiresLength`.
 
@@ -325,16 +321,14 @@ Next we will call a function to get Service Hire in the block of code below:
   }
 ```
 
-
 The `hireService` function is a public function because we need it to be accessed outside the contract. The function accepts three arguments: `_index`, `_price`, and `_serviceUser`, which are of type `uint` and `address`.
 
 The function first checks a condition using the `require` statement, which verifies if a transfer of `_price` amount of `cUsdTokenAddress` token has occurred from the `msg.sender` (i.e., the account that called the function) to the `_serviceUser` address. If the transfer is successful, the `hireService` function of a `ServiceContract` instance is then called, passing the `_index` argument.
 
 The `transferFrom` method used in the `require` statement is a function provided by an ERC20-compatible token contract that allows the transfer of tokens from one address to another. The `payable` keyword used to cast the `_serviceUser` address indicates that the recipient can receive ether along with the token transfer, i.e., `_serviceUser` is a payable address.
 
-The code also includes an error message that will be displayed if the `require` condition fails, i.e., if the transfer of tokens is not successful.
+The code also includes an error messages that will be displayed if the `require` condition fails, i.e., if the transfer of tokens is not successful.
 The function will use the require function to make sure that the sender of this transaction is not able to request for the service and will throw an error if this is done. 
-
 
 The next function, the `buyProduct` function which handles the buying of the product is a Public function and also a payble function which contains most of the parameters already discussed.
 
@@ -384,14 +378,16 @@ And we have the full code below:
 
 ```js
 // SPDX-License-Identifier: MIT
+// This specifies the license under which the contract code can be used.
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import './GymnaseumService.sol';
+// Importing another contract
+import './GymnasiumService.sol';
 
+contract Gymnasium {
 
-contract Gymnaseum {
-
+  // Defining a struct to hold product information
   struct Product {
     address payable owner;
     string name;
@@ -403,17 +399,20 @@ contract Gymnaseum {
     uint sold;
   }
 
+  // Variables to store data
   uint internal productsLength = 0;
-  address payable internal onwerAddress;
+  address payable internal onwerAddress; // This should be spelled "ownerAddress"
   ServiceInterface internal ServiceContract;
   mapping (uint => Product) internal products;
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 
+  // Constructor to set the contract owner and the ServiceContract address
   constructor(address serviceContractAddress) {
-    onwerAddress = payable(msg.sender);
-    ServiceContract = ServiceInterface(address(serviceContractAddress));
+    onwerAddress = payable(msg.sender); // Storing the contract owner's address
+    ServiceContract = ServiceInterface(address(serviceContractAddress)); // Initializing the ServiceContract instance
   }
 
+  // Function to add a new product to the product mapping
   function writeProduct(
     string memory _name,
     string memory _image,
@@ -433,9 +432,10 @@ contract Gymnaseum {
       _price,
       _sold
     );
-    productsLength++;
+    productsLength++; // Incrementing the product length
   }
 
+  // Function to add a new service to the ServiceContract
   function addService(
     string memory _name,
     string memory _image,
@@ -447,6 +447,7 @@ contract Gymnaseum {
     ServiceContract.writeService(_name, _image, _description, _location, _contact, _rate);
   }
 
+  // Function to read a product's details from the product mapping
   function readProduct(uint _index) public view returns (
     address payable owner,
     string memory name, 
@@ -457,7 +458,7 @@ contract Gymnaseum {
     uint price, 
     uint sold
   ) {
-    Product storage product = products[_index];
+    Product storage product = products[_index]; // Getting the product struct from the mapping
     return(
       product.owner,
       product.name,
@@ -470,6 +471,7 @@ contract Gymnaseum {
     );
   }
 
+  // Function to read a service's details from the ServiceContract
   function getService(uint _index) public view returns(
     address user,
     string memory name, 
@@ -483,6 +485,7 @@ contract Gymnaseum {
     return ServiceContract.readService(_index);
   }
 
+  // Function to read a service hire's details from the ServiceContract
   function getServiceHire(uint _serviceIndex, uint _hireIndex) public view returns(
     address hirer,
     uint timestamp
@@ -490,7 +493,7 @@ contract Gymnaseum {
     return ServiceContract.readServiceHire(_serviceIndex, _hireIndex);
   }
     
-  // hire a service
+  // Function to hire a service
   function hireService(
    uint _index,
    uint _price,
@@ -538,21 +541,20 @@ contract Gymnaseum {
 }
 ```
 
-## Contract Deployment
+## Contract Deployment:
 
 To deploy the contract, we would need:
-1. [CeloExtensionWallet]((https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh?hl=en))
+1. [Celo Extension Wallet]((https://chrome.google.com/webstore/detail/celoextensionwallet/kkilomkmpmkbdnfelcpgckmpcaemjcdh?hl=en))
 2. [Celo Faucet](https://celo.org/developers/faucet) 
-3. Celo Remix Plugin
+3. [Celo Remix Plugin](https://github.com/dexfair/celo-remix-plugin)
 
-Download the Celo Extension Wallet from the Google chrome store using the link above. After doing that, create a wallet, store your key phrase in a very safe place to avoid permanently losing your funds.
+Download the Celo Extension Wallet from the Google chrome store using the link above. After doing that create a wallet, store your key phrase in a very safe place to avoid permanently losing your funds.
 
-After downloading and creating your wallet, you will need to fund it with test tokens using the Celo Faucet. Copy the address to your wallet, click the link to the faucet above and the paste the address into the text field and confirm.
+After which, you will need to fund it with test tokens using the Celo Faucet. Copy the address to your wallet, click the link to the faucet above and the paste the address into the text field and confirm.
 
-Next up, on remix, download and activate the celo plugin from the plugin manager. 
+Next up on remix, download and activate the celo plugin from the plugin manager. 
 
 Lastly, connect your wallet and deploy your contract.
-
 
 We will then go ahead to build the Service Contract ("GymnaseumService")on Remix also.
 
@@ -564,7 +566,7 @@ Starting out in the first line as discussed already, you include a statement tha
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 ```
-Next we are going to have some couple of functions within the Service Interface.
+Next we are going to have some couple of functions within the Service Interface:
 
 ```js
 interface ServiceInterface {
@@ -613,10 +615,11 @@ Next in the Service Contract as stated above we have an interface which specifie
 The two events specified in the interface are:
 
 1. Transfer Event: This event is emitted when tokens are transferred from one address to another. It includes the sender's address, the recipient's address, and the amount of tokens transferred.
+
 2. Approval Event: This event is emitted when a spender is approved to withdraw tokens from an owner's address. It includes the owner's address, the spender's address, and the amount of tokens approved.
 
 ```js
-contract GymnaseumService {
+contract GymnasiumService {
 
   struct Hire {
     address hirer;
@@ -637,22 +640,22 @@ contract GymnaseumService {
 }
 ```
 
-In the code above we have our contract which is called GymnaseumService, in the contract we defined two struct types: Hire and Service.
+In the code above we have our contract which is called `GymnasiumService`, in the contract we defined two struct types: Hire and Service.
 
-The Hire struct has two properties: hirer, which is an Ethereum address, and timestamp, which is a Unix timestamp indicating when the hiring occurred. This struct is used to keep track of users who have hired services from the GymnaseumService contract.
+The Hire struct has two properties: hirer, which is an Ethereum address, and timestamp, which is a Unix timestamp indicating when the hiring occurred. This struct is used to keep track of users who have hired services from the GymnasiumService contract.
 
 The Service struct has several properties, including:
 
-address: which stores a users address (an Ethereum address that is payable).
-name: this has a string data type and it takes the name of the service.
-image: this has a string data type and it takes the image associated with the service.
-description: this has a string data type and it takes the description of the service.
-location: this has a string data type and it takes the location of the service.
-contact: this has a string data type and it takes the contact information for the service.
-rate: an unsigned integer that represents the hourly rate for the service.
-hiresLength: an unsigned integer that represents the number of times the service has been hired.
+1. address: which stores a users address (an Ethereum address that is payable).
+2. name: this has a string data type and it takes the name of the service.
+3. image: this has a string data type and it takes the image associated with the service.
+4. description: this has a string data type and it takes the description of the service.
+5. location: this has a string data type and it takes the location of the service.
+6. contact: this has a string data type and it takes the contact information for the service.
+7. rate: an unsigned integer that represents the hourly rate for the service.
+8. hiresLength: an unsigned integer that represents the number of times the service has been hired.
 
-Lastly we have a mapping of unsigned integers to Hire struct, which will be used to keep track of who has hired the service and when.
+Lastly, we have a mapping of unsigned integers to Hire struct, which will be used to keep track of who has hired the service and when.
 
 ```js
 uint internal servicesLength = 0;
@@ -681,9 +684,9 @@ The first storage variable is an unsigned integer servicesLength which is initia
 
 The services mapping is defined to map unsigned integers to Service structs. The Service struct has various properties that describe a particular service that can be hired, such as its name, image, description, location, contact information, and hourly rate.
 
-The writeServiceEvent event is defined with several parameters, including the address of the user who added the service, the name of the service, its image, description, location, contact information, and hourly rate. This event is likely used to log when a new service is added to the services mapping.
+The `writeServiceEvent` event is defined with several parameters, including the address of the user who added the service, the name of the service, its image, description, location, contact information, and hourly rate. This event is likely used to log when a new service is added to the services mapping.
 
-The hireServiceEvent event is defined with several parameters, including the address of the user who hired the service, the address of the hirer, the amount paid for the service, and the timestamp of when the service was hired. 
+The `hireServiceEvent` event is defined with several parameters, including the address of the user who hired the service, the address of the hirer, the amount paid for the service, and the timestamp of when the service was hired. 
 
 In general, the services mapping is used to keep track of all the services that have been added to the system, and the events are used to log when services are added or hired.
 
@@ -900,7 +903,7 @@ contract GymnaseumService {
     uint _hiresLength = 0;
 
     Service storage newService = services[servicesLength];
-    newService.user = payable(tx.origin);
+    newService.user = payable(msg.sender);
     newService.name = _name;
     newService.image = _image;
     newService.description = _description;
@@ -981,32 +984,32 @@ contract GymnaseumService {
 }
 ```
 
-You go ahead to deploy the Service Contract, using the same steps used in deploying the 'Gymnaseum' Contract.
+You go ahead to deploy the Service Contract, using the same steps used in deploying the 'Gymnasium' Contract.
 
 After successfully building our both contracts using Remix IDE, next steps would be to move the codes to our project directory on our local device, to continue building.
 
-We would begin by creating a "contract" folder in our project directory. In this folder we will create our first contract file which we would name `Gymnaseum.sol`, then we copy and paste all our `gymnaseum.sol` contract codes from Remix IDE.
+We would begin by creating a "contract" folder in our project directory. In this folder we will create our first contract file which we would name `Gymnasium.sol`, then we copy and paste all our `gymnasium.sol` contract codes from Remix IDE.
 
 Other files we would have in our "contract" folder includes:
 
-`gymnaseum.abi.json` file. This would be used to store the abi for your contract.
+`gymnasium.abi.json` file. This would be used to store the abi for your contract.
 `erc20.abi.json` file. This would store the abi for the IERC20 interface.
 
 Note: To interact with a smart contract that is deployed in bytecode, an interface known as the ABI (Application Binary Interface) is required for the contractKit to interpret the bytecode. ([Learn about ABIs](https://docs.soliditylang.org/en/develop/abi-spec.html))
 
 The ABI allows for the execution of functions and the reading of data. When using Remix to compile a contract, the ABI is also generated in the form of a JSON file.
 
-Next we would create another file for our "GymnaseumService Contract" which we would name `GymnaseumService.sol`.
+Next we would create another file for our "GymnaseumService Contract" which we would name `GymnasiumService.sol`.
 
 Hence, in our contract folder, we would have the following files:
-1. Gymnaseum.sol
-2. GymnaseumService.sol
-3. gymnaseum.abi.json
-4. gymnaseumService.abi.json
+1. Gymnasium.sol
+2. GymnasiumService.sol
+3. gymnasium.abi.json
+4. gymnasiumService.abi.json
 
 This concludes our Contract Section of this tutorial, you can find all contract files here: [https://github.com/Favour-dgreat/gymnaseum-tutorial/tree/tutorial1/contract]
 
-## Frontend Development
+## Frontend Development:
 
 In the next step of this tutorial, we will build the Frontend interface to interact with our SmartContracts using HTML.
 
@@ -1029,7 +1032,7 @@ Open the "index.html" file located in the public folder of your project, and let
   <meta name="description" content="A mini e-commerce / service platform powered by Blockchain Technology">
   
 
-  <title>[Dacade] Gymnaseum</title>
+  <title>[Dacade] Gymnasium</title>
 
 ```
 Start by declaring the document type, then add an HTML tag, create a head element, and include meta tags. 
@@ -1305,7 +1308,7 @@ Note: This is not the entirety of the HTML codes used in this project.
 
 Get the full HTML Codes here:[https://github.com/Favour-dgreat/gymnaseum-tutorial/tree/tutorial2]
 
-## main.js
+## main.js:
 
 The "main.js" file is another important file to be used in our project. Create the "src" folder in your root project directory, and create your 'main.js' file which will be used for our project. 
 
@@ -1374,7 +1377,6 @@ You would then access the user's account by utilizing the web3 object and kit in
 
 After creating the new kit instance, use the method kit.web3.eth.getAccounts() to get an array of the connected user's addresses. Use the first address from this array and set it as the default user address by using kit.defaultAccount. This will allow the address to be used globally in the DApp.
 
-
 ```js
 async function paymentApproval(_price) {
   const ERCContract = new kit.web3.eth.Contract(erc20Abi, erc20Address)
@@ -1387,7 +1389,6 @@ async function paymentApproval(_price) {
 }
 ```
 
-
 Next in the code block above, we have another async function. The code below has a function `paymentApproval(_price)` that takes one parameter `_price` as input. 
 
 The function carries out an approval transaction for a specified amount of tokens. The tokens are an ERC-20 token since the function initializes a new instance of the ERCContract.
@@ -1399,7 +1400,6 @@ Next, the `approve()` function from the ERC-20 contract is called with two argum
 The `send()` function is then called on the `approve()` method. It sends the transaction to the network to be processed and returns a Promise containing the transaction hash, which is awaited and stored in the result variable.
 
 Finally, the function returns the result of the transaction. 
-
 
 Now we will go ahead to create an asynchronous function called `getBalance` that retrieves the user's balance and updates the corresponding state variables, in the code block below:
 
@@ -1414,7 +1414,6 @@ We Start by calling the `kit.getTotalBalance(kit.defaultAccount)` method, which 
 
 The next step is to extract the cUSD balance by using the `.cUSD` properties respectively. Then we shift the value by -ERC20_DECIMALS which is a way to represent the balance in terms of smaller units in our case 18 decimal places, and then it's converting the value to fixed 2 decimal points. These values are stored in the `cUSDBalance` variable.
 Lastly, we render the value of `cUSDBalance` to an HTML element with the ID of balance. 
-
 
 Up next, we create a function called `getProducts` that retrieves the products information from the smart contract and updates the corresponding state variables.
 
@@ -1870,16 +1869,15 @@ document.querySelector("#GymnaseumServices").addEventListener("click", async (e)
 })
 ```
 
-
-
-## Conclusion
+## Conclusion:
 Congratulations 🎉, this brings us to the end of this project. 
+Therefore, building a Gym Marketplace on the Celo Blockchain using HTML & Solidity requires a combination of skills in web development, smart contract programming, and blockchain technology. The tutorial provides a step-by-step guide on how to set up the development environment, write smart contracts using Solidity, and integrate them with HTML to create a fully functional decentralized application.
+
 You can follow or use this project as a reference to edit yours and get the required files, images e.t.c. <https://github.com/Favour-dgreat/gymnaseum-tutorial>.
 
 You can also check out the preview of our project (this is what your project should look like at the end of this tutorial): <https://favour-dgreat.github.io/gymnaseum-dacade/>
 
+## About the Author:
+Favour Adeshina is a Mobile and Web3 developer with a passion for making technology accessible for all.
 
-## About the Author
-Favour Adeshina is a Mobile and web3 developer with a passion for making technology accessible for all.
-
-Thank You
+Thank You!!!
