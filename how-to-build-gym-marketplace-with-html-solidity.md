@@ -404,13 +404,15 @@ contract Gymnaseum {
   }
 
   uint internal productsLength = 0;
-  address payable internal onwerAddress;
+  address payable internal ownerAddress;
   ServiceInterface internal ServiceContract;
   mapping (uint => Product) internal products;
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 
   constructor(address serviceContractAddress) {
-    onwerAddress = payable(msg.sender);
+    require(_serviceContractAddress != address(0), "Service contract address cannot be zero.");
+    ownerAddress = payable(msg.sender);
+    ownerAddress = payable(msg.sender);
     ServiceContract = ServiceInterface(address(serviceContractAddress));
   }
 
@@ -423,7 +425,7 @@ contract Gymnaseum {
     uint _price
   ) public {
     uint _sold = 0;
-    products[productsLength] = Product(
+    products.push(Product(
       payable(msg.sender),
       _name,
       _image,
@@ -432,9 +434,9 @@ contract Gymnaseum {
       _serviceFee,
       _price,
       _sold
-    );
-    productsLength++;
+    ));
   }
+
 
   function addService(
     string memory _name,
@@ -470,18 +472,12 @@ contract Gymnaseum {
     );
   }
 
-  function getService(uint _index) public view returns(
-    address user,
-    string memory name, 
-    string memory image, 
-    string memory description, 
-    string memory location, 
-    string memory contact,
-    uint rate,
-    uint hiresLength
-  ) {
-    return ServiceContract.readService(_index);
-  }
+  function getService(uint _index) public view returns (Service memory) {
+    require(_index < servicesLength, "Index out of range");
+
+    return services[_index];
+}
+
 
   function getServiceHire(uint _serviceIndex, uint _hireIndex) public view returns(
     address hirer,
@@ -496,6 +492,7 @@ contract Gymnaseum {
    uint _price,
    address _serviceUser
   ) public {
+    require(_serviceUser != address(0), "Invalid service user address.");
     require(
       IERC20Token(cUsdTokenAddress).transferFrom(
         msg.sender,
@@ -512,7 +509,7 @@ contract Gymnaseum {
     require(
       IERC20Token(cUsdTokenAddress).transferFrom(
         msg.sender,
-        onwerAddress,
+        ownerAddress,
         products[_index].serviceFee
       ),
       "Product fee transfer failed."
@@ -529,7 +526,7 @@ contract Gymnaseum {
   }
   
   function getProductsLength() public view returns (uint) {
-    return (productsLength);
+    return productsLength;
   }
 
   function getServicesLength() public view returns (uint) {
