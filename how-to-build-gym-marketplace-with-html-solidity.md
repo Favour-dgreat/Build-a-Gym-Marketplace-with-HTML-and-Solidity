@@ -78,13 +78,13 @@ This license governs how the code can be used, and it is important to ensure tha
 To ensure the smart contract can run without any issues and is protected by a license, it's important to indicate the version of the compiler and the license it uses. This can be done by specifying the compiler version with the `pragma` keyword, and the license used, by including a statement that specifies the license at the beginning of the contract code.
 
 
-Next, we import the Service Contract which we will also be using in this project `import './GymnaseumService.sol';` the service contract has the hire function to hire a gym trainer and pay with the celo stablecoin (cUSD). 
+Next, we import the Service Contract which we will also be using in this project `import './GymnasiumService.sol';` the service contract has the hire function to hire a gym trainer and pay with the celo stablecoin (cUSD). 
 
 ```solidity
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.7.0 <0.9.0;
-import './GymnaseumService.sol';
+import './GymnasiumService.sol';
 ```
 
 Next up, we define an `IERC20Token` interface which enables us to interact with the Celo stablecoin (cUSD).
@@ -110,10 +110,10 @@ These tokens have pre-defined functions and events that can be easily used in co
 
 You can find more information on how to use these functions and events in the Celo **[documentation](https://docs.celo.org/developer-guide/celo-for-eth-devs)**. The documentation also provides more details on how to interact with ERC-20 tokens and how to use them with the Celo network.
 
-Following this, You define your smart contract by giving it a name. In our case, our contract name is `Gymnaseum`. You can name it anything you want but ensure you keep it descriptive.
+Following this, You define your smart contract by giving it a name. In our case, our contract name is `Gymnasium`. You can name it anything you want but ensure you keep it descriptive.
 
 ```solidity
-Contract Gymnaseum {
+Contract Gymnasium {
 
   struct Product {
     address payable owner;
@@ -187,10 +187,10 @@ So far, we have our code as shown below:
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import './GymnaseumService.sol';
+import './GymnasiumService.sol';
 
 
-contract Gymnaseum {
+contract Gymnasium {
 
   struct Product {
     address payable owner;
@@ -599,9 +599,9 @@ Lastly, connect your wallet and deploy your contract.
 
 ## GymnaseumService Smart Contract Development
 
-We will now go ahead and build the Service Contract ("GymnaseumService")on Remix also.
+We will now go ahead and build the Service Contract ("GymnasiumService")on Remix also.
 
-Create a file also on Remix, which you can name 'GymnaseumService.sol'.
+Create a file also on Remix, which you can name 'GymnasiumService.sol'.
 
 Starting in the first line as discussed already, you include a statement that specifies the license under which the code is being released.
 
@@ -1054,7 +1054,7 @@ Note: To interact with a smart contract that is deployed in bytecode, an interfa
 
 The ABI allows for the execution of functions and the reading of data. When using Remix to compile a contract, the ABI is also generated in the form of a JSON file.
 
-Next, we would create another file for our "GymnaseumService Contract" which we would name `GymnaseumService.sol`.
+Next, we would create another file for our "GymnaseumService Contract" which we would name `GymnasiumService.sol`.
 
 Hence, in our contract folder, we would have the following files:
 1. Gymnaseum.sol
