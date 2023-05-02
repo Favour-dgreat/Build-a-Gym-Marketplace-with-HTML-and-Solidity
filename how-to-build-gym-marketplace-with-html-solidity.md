@@ -750,7 +750,7 @@ In general, the services mapping is used to keep track of all the services that 
     uint _hiresLength = 0;
 
     Service storage newService = services[servicesLength];
-    newService.user = payable(msg.sender);
+    newService.user = payable(tx.origin);
     newService.name = _name;
     newService.image = _image;
     newService.description = _description;
@@ -957,7 +957,7 @@ contract GymnaseumService {
     uint _hiresLength = 0;
 
     Service storage newService = services[servicesLength];
-    newService.user = payable(msg.sender);
+    newService.user = payable(tx.origin);
     newService.name = _name;
     newService.image = _image;
     newService.description = _description;
