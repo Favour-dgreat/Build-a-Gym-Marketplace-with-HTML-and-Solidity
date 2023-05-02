@@ -151,7 +151,7 @@ uint internal productsLength = 0;
 We also define the visibility of our variable as `internal` which means it cannot be accessed from external smart contracts or addresses and can only be modified within the smart contract. ([Learn more about visiblity](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)). Also, for us to interact with the cUSD ERC-20 token on the Celo Alfajores test network, you need to know the address of the token. So we define this also with the code below:
 
 ```solidity
-  address payable internal onwerAddress;
+  address payable internal ownerAddress;
   ServiceInterface internal ServiceContract;  
 ```
 In the code above we also interfaced the Service Contract.
@@ -175,7 +175,7 @@ The `ServiceContract` variable is assigned to the `ServiceInterface`.
 
 ```solidity
 constructor(address serviceContractAddress) {
-    onwerAddress = payable(msg.sender);
+    ownerAddress = payable(msg.sender);
     ServiceContract = ServiceInterface(address(serviceContractAddress));
   }
 ```
@@ -204,13 +204,13 @@ contract Gymnaseum {
   }
 
   uint internal productsLength = 0;
-  address payable internal onwerAddress;
+  address payable internal ownerAddress;
   ServiceInterface internal ServiceContract;
   mapping (uint => Product) internal products;
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 
   constructor(address serviceContractAddress) {
-    onwerAddress = payable(msg.sender);
+    ownerAddress = payable(msg.sender);
     ServiceContract = ServiceInterface(address(serviceContractAddress));
   }
 }
@@ -218,14 +218,20 @@ contract Gymnaseum {
 In the next section, you will define a function to add the products to the smart contract.
 
 ```solidity
-   function writeProduct(
-    string memory _name,
-    string memory _image,
-    string memory _description, 
+  // Function to add a new product to the product mapping
+  function writeProduct(
+    string calldata _name,
+    string calldata _image,
+    string calldata _description, 
     string memory _location,
     uint _serviceFee,
     uint _price
   ) public {
+    require(bytes(_name).length > 0, "Empty name");
+    require(bytes(_image).length > 0, "Empty image");
+    require(bytes(_description).length > 0, "Empty description");
+    require(bytes(_location).length > 0, "Empty location");
+    require(_serviceFee > 0, "Service fee needs to be at least 1 wei");
     uint _sold = 0;
     products[productsLength] = Product(
       payable(msg.sender),
@@ -237,7 +243,7 @@ In the next section, you will define a function to add the products to the smart
       _price,
       _sold
     );
-    productsLength++;
+    productsLength++; // Incrementing the product length
   }
 ```
 
@@ -324,11 +330,15 @@ The `hiresLength`parameter tracks when a service is hired already.
 
 Next, we will call a function to get Service Hire in the block of code below:
 ```solidity
-   function hireService(
+  // Function to hire a service
+  function hireService(
    uint _index,
    uint _price,
    address _serviceUser
   ) public {
+    (address user,,,,,,uint rate,) = getService(_index);
+    require(user == _serviceUser, "Incorrect address used for this service");
+    require(_price == rate,"Incorrect price for service");
     require(
       IERC20Token(cUsdTokenAddress).transferFrom(
         msg.sender,
@@ -360,7 +370,7 @@ The next function, the `buyProduct` function which handles the buying of the pro
     require(
       IERC20Token(cUsdTokenAddress).transferFrom(
         msg.sender,
-        onwerAddress,
+        ownerAddress,
         products[_index].serviceFee
       ),
       "Product fee transfer failed."
@@ -401,14 +411,16 @@ And we have the full code below:
 
 ```solidity
 // SPDX-License-Identifier: MIT
+// This specifies the license under which the contract code can be used.
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import './GymnaseumService.sol';
+// Importing another contract
+import './GymnasiumService.sol';
 
+contract Gymnasium {
 
-contract Gymnaseum {
-
+  // Defining a struct to hold product information
   struct Product {
     address payable owner;
     string name;
@@ -420,25 +432,33 @@ contract Gymnaseum {
     uint sold;
   }
 
+  // Variables to store data
   uint internal productsLength = 0;
-  address payable internal onwerAddress;
+  address payable internal ownerAddress; // This should be spelled "ownerAddress"
   ServiceInterface internal ServiceContract;
   mapping (uint => Product) internal products;
   address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
 
+  // Constructor to set the contract owner and the ServiceContract address
   constructor(address serviceContractAddress) {
-    onwerAddress = payable(msg.sender);
-    ServiceContract = ServiceInterface(address(serviceContractAddress));
+    ownerAddress = payable(msg.sender); // Storing the contract owner's address
+    ServiceContract = ServiceInterface(address(serviceContractAddress)); // Initializing the ServiceContract instance
   }
 
+  // Function to add a new product to the product mapping
   function writeProduct(
-    string memory _name,
-    string memory _image,
-    string memory _description, 
+    string calldata _name,
+    string calldata _image,
+    string calldata _description, 
     string memory _location,
     uint _serviceFee,
     uint _price
   ) public {
+    require(bytes(_name).length > 0, "Empty name");
+    require(bytes(_image).length > 0, "Empty image");
+    require(bytes(_description).length > 0, "Empty description");
+    require(bytes(_location).length > 0, "Empty location");
+    require(_serviceFee > 0, "Service fee needs to be at least 1 wei");
     uint _sold = 0;
     products[productsLength] = Product(
       payable(msg.sender),
@@ -450,9 +470,10 @@ contract Gymnaseum {
       _price,
       _sold
     );
-    productsLength++;
+    productsLength++; // Incrementing the product length
   }
 
+  // Function to add a new service to the ServiceContract
   function addService(
     string memory _name,
     string memory _image,
@@ -464,6 +485,7 @@ contract Gymnaseum {
     ServiceContract.writeService(_name, _image, _description, _location, _contact, _rate);
   }
 
+  // Function to read a product's details from the product mapping
   function readProduct(uint _index) public view returns (
     address payable owner,
     string memory name, 
@@ -474,7 +496,7 @@ contract Gymnaseum {
     uint price, 
     uint sold
   ) {
-    Product storage product = products[_index];
+    Product storage product = products[_index]; // Getting the product struct from the mapping
     return(
       product.owner,
       product.name,
@@ -487,6 +509,7 @@ contract Gymnaseum {
     );
   }
 
+  // Function to read a service's details from the ServiceContract
   function getService(uint _index) public view returns(
     address user,
     string memory name, 
@@ -500,6 +523,7 @@ contract Gymnaseum {
     return ServiceContract.readService(_index);
   }
 
+  // Function to read a service hire's details from the ServiceContract
   function getServiceHire(uint _serviceIndex, uint _hireIndex) public view returns(
     address hirer,
     uint timestamp
@@ -507,12 +531,15 @@ contract Gymnaseum {
     return ServiceContract.readServiceHire(_serviceIndex, _hireIndex);
   }
     
-  // hire a service
+  // Function to hire a service
   function hireService(
    uint _index,
    uint _price,
    address _serviceUser
   ) public {
+    (address user,,,,,,uint rate,) = getService(_index);
+    require(user == _serviceUser, "Incorrect address used for this service");
+    require(_price == rate,"Incorrect price for service");
     require(
       IERC20Token(cUsdTokenAddress).transferFrom(
         msg.sender,
@@ -529,7 +556,7 @@ contract Gymnaseum {
     require(
       IERC20Token(cUsdTokenAddress).transferFrom(
         msg.sender,
-        onwerAddress,
+        ownerAddress,
         products[_index].serviceFee
       ),
       "Product fee transfer failed."
@@ -706,18 +733,24 @@ The hireServiceEvent event is defined with several parameters, including the add
 In general, the services mapping is used to keep track of all the services that have been added to the system, and the events are used to log when services are added or hired.
 
 ```solidity
-function writeService(
-    string memory _name,
-    string memory _image,
-    string memory _description, 
+  function writeService(
+    string calldata _name,
+    string calldata _image,
+    string calldata _description, 
     string memory _location,
     string memory _contact,
     uint _rate
   ) external {
+    require(bytes(_name).length > 0, "Empty name");
+    require(bytes(_image).length > 0, "Empty image");
+    require(bytes(_description).length > 0, "Empty description");
+    require(bytes(_location).length > 0, "Empty location");
+    require(bytes(_contact).length > 0, "Empty contact");
+    require(_rate > 0, "Rate needs to be at least 1 wei");
     uint _hiresLength = 0;
 
     Service storage newService = services[servicesLength];
-    newService.user = payable(tx.origin);
+    newService.user = payable(msg.sender);
     newService.name = _name;
     newService.image = _image;
     newService.description = _description;
@@ -908,17 +941,23 @@ contract GymnaseumService {
   );
 
   function writeService(
-    string memory _name,
-    string memory _image,
-    string memory _description, 
+    string calldata _name,
+    string calldata _image,
+    string calldata _description, 
     string memory _location,
     string memory _contact,
     uint _rate
   ) external {
+    require(bytes(_name).length > 0, "Empty name");
+    require(bytes(_image).length > 0, "Empty image");
+    require(bytes(_description).length > 0, "Empty description");
+    require(bytes(_location).length > 0, "Empty location");
+    require(bytes(_contact).length > 0, "Empty contact");
+    require(_rate > 0, "Rate needs to be at least 1 wei");
     uint _hiresLength = 0;
 
     Service storage newService = services[servicesLength];
-    newService.user = payable(tx.origin);
+    newService.user = payable(msg.sender);
     newService.name = _name;
     newService.image = _image;
     newService.description = _description;
